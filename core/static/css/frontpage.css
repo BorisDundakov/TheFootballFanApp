@@ -1,0 +1,37 @@
+body {
+    background-color: green;
+    font-size: 10px;
+}
+
+h1{
+    text-align: center;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background-color: green;
+    display: flex;
+    align-items: center;
+
+}
+form{
+    background-color: white;
+    width:500px;
+    height: 35px;
+    display: flex;
+}
+form input{
+    flex:1;
+    border:none;
+    outline:none;
+}
+form button{
+    background: tomato;
+    padding: 10px;
+    border: none;
+    outline: none;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
