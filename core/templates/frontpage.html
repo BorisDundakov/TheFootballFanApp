@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
-    <img src="https://media.istockphoto.com/photos/soccer-fans-at-stadium-picture-id469569148?k=20&m=469569148&s=612x612&w=0&h=nW-BqRI6p9iqfexKgUHxmyWFj_bPbZCjHnE5RpkzkSc=" alt="Frontpage logo" width="100" height="80">
+    <img src="https://media.istockphoto.com/photos/soccer-fans-at-stadium-picture-id469569148?k=20&m=469569148&s=612x612&w=0&h=nW-BqRI6p9iqfexKgUHxmyWFj_bPbZCjHnE5RpkzkSc="
+         alt="Frontpage logo" width="100" height="80">
     <meta charset="utf-8">
-    <link rel = "stylesheet" href="{% static 'css/frontpage.css'%}">
+    <link rel="stylesheet" href="{% static 'css/frontpage.css' %}">
     <h1>
         The Ultimate Football Fan App
     </h1>
@@ -14,11 +14,36 @@
         The Ultimate Football Fan App
     </title>
 
-    <div class = "container">
-        <form>
-            <input type = "text" placeholder="enter team/player name here">
-            <button type = "submit">Search</button>
-            <button onclick="location.href = 'http://127.0.0.1:8000/team/';" ></button>
+    <div class="container">
+        <form action="{% url 'team' %}" method="post" id="submitTeamFRM">
+            {% csrf_token %}
+
+            <input type="text" placeholder="enter team/player name here" name="team_name" form = "submitTeamFRM">
+
+            <button type="submit" id="teamBTN" onclick="searchTeamBTN()">Search</button>
+{#            <script>#}
+{##}
+{#                const searchTeamBTN = () => {#}
+{#                    let team_name = document.getElementById("team_name").value#}
+{#                    team_name.value = document.getElementById("team_name").value;#}
+{#                }#}
+{##}
+{##}
+{#            </script>#}
+
+
+            {#            <a href="team.html"></a>#}
+            {#            <button type="button" id="teamBTN" name="team" form="submitTeamFRM" onclick="location.href ='team'">Search</button>#}
+            {#            <script>#}
+            {##}
+            {#                let input = document.getElementById("teamBTN")#}
+            {#                input.addEventListener("keypress", function (event) {#}
+            {#                    if (event.key === "Enter") {#}
+            {#                        event.preventDefault();#}
+            {#                        document.getElementById("teamBTN").click();#}
+            {#                    }#}
+            {#                });#}
+            {#            </script>#}
         </form>
     </div>
 
