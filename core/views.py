@@ -12,4 +12,5 @@ def team(request):
     team_name = request.POST.get('team_name')
 
     context['team_name'] = team_name
+
     return render(request, 'team.html', context)
