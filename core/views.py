@@ -16,7 +16,17 @@ def team(request):
     context['team_name'] = team_name
 
     teams = export_team_names()
-    if team_name not in teams.values():
+
+    correct_name = False
+
+    for t in teams.values():
+        if team_name in t:
+            team_name = t
+            context['team_name'] = t
+            correct_name = True
+            break
+
+    if not correct_name:
         return render(request, 'frontpage.html')
 
     team_number = 0
@@ -26,6 +36,6 @@ def team(request):
             break
 
     result = export_next_fixture(team_name, team_number)
-    context['next_fixture'] = result
-
+    context['home'] = result['home']
+    context['away'] = result['away']
     return render(request, 'team.html', context)
