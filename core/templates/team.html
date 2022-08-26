@@ -3,22 +3,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel = "stylesheet" href="{% static 'css/team.css'%}">
+    <link rel="stylesheet" href="{% static 'css/team.css' %}">
     # stadium to appear as backround
-
-
-    <script>
-        let a = {{ next_fixture }}
-        home_team = a['home']
-        away_team = a['away']
-
-    </script>
 
 
     <p>Team Name: {{ team_name }}</p>
     <p>Next Fixture: {{ home }} vs {{ away }}</p>
-    <p>Previous Fixture: </p>
-    <p>Last 5 games: </p>
+    <p>Previous Fixture: {{ last_3_matches.0 }} </p>
+    <p>Last 3 games: {{ last_3_matches }}</p>
+    <ul>
+        {% for ind_match in last_3_matches %}
+            {% for key,value in ind_match.items %}
+                <li>{{ key }} - {{ value  }}</li>
+
+            {% endfor %}
+        {% endfor %}
+    </ul>
     <p>Stadium location: </p>
     <p>Based in: </p>
 
