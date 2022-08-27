@@ -8,9 +8,12 @@
 
     <p>Team Name: {{ team_name }}</p>
     <p>Next Fixture: {{ home }} vs {{ away }}</p>
-    <p>Previous Fixture: {{ last_3_matches.0}} </p>
+    <p>Previous Fixture:     {% for key,value in last_3_matches.0.items %}
+        {{ key }} - {{ value }}
+    {% endfor %}
+    </p>
     <p>Last 3 games:
-    <ul>
+        <br>
         {% for ind_match in last_3_matches %}
             {% for key,value in ind_match.items %}
                 {{ key }} - {{ value }}
@@ -20,7 +23,6 @@
                 {% endif %}
             {% endfor %}
         {% endfor %}
-    </ul>
 
 
     <p>Stadium location: </p>

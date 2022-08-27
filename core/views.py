@@ -37,7 +37,7 @@ def team(request):
             break
 
     next_match = export_next_fixture(team_name, team_number)
-    last_3_matches = export_last_3_results(team_name,team_number)
+    last_3_matches = export_last_3_results(team_name, team_number)
 
     context['home'] = next_match['home']
     context['away'] = next_match['away']

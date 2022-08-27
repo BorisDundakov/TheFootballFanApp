@@ -79,6 +79,3 @@ def export_last_3_results(team_name, team_number):
 
     return results
 
-
-#export_last_3_results('levski-sofia', 6552)
-export_team_names()
