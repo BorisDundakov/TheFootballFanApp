@@ -6,19 +6,23 @@
     <link rel="stylesheet" href="{% static 'css/team.css' %}">
     # stadium to appear as backround
 
-
     <p>Team Name: {{ team_name }}</p>
     <p>Next Fixture: {{ home }} vs {{ away }}</p>
-    <p>Previous Fixture: {{ last_3_matches.0 }} </p>
-    <p>Last 3 games: {{ last_3_matches }}</p>
+    <p>Previous Fixture: {{ last_3_matches.0}} </p>
+    <p>Last 3 games:
     <ul>
         {% for ind_match in last_3_matches %}
             {% for key,value in ind_match.items %}
-                <li>{{ key }} - {{ value  }}</li>
+                {{ key }} - {{ value }}
+                {% if forloop.counter|divisibleby:2 %}
+                    <br>
 
+                {% endif %}
             {% endfor %}
         {% endfor %}
     </ul>
+
+
     <p>Stadium location: </p>
     <p>Based in: </p>
 
