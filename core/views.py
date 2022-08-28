@@ -2,7 +2,7 @@ from django.shortcuts import render
 from core.teams.BulgarianLeague import export_team_names
 from core.teams.BulgarianLeague import export_next_fixture
 from core.teams.BulgarianLeague import export_last_3_results
-
+from core.teams.BulgarianLeague import export_team_location
 
 # Create your views here.
 
@@ -38,8 +38,9 @@ def team(request):
 
     next_match = export_next_fixture(team_name, team_number)
     last_3_matches = export_last_3_results(team_name, team_number)
-
+    team_location = export_team_location(team_name)
     context['home'] = next_match['home']
     context['away'] = next_match['away']
     context['last_3_matches'] = last_3_matches
+    context['team_location'] = team_location
     return render(request, 'team.html', context)

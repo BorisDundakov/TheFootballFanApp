@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import ssl
+import urllib.request, urllib.parse, urllib.error
 
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
@@ -79,3 +81,70 @@ def export_last_3_results(team_name, team_number):
 
     return results
 
+
+def export_team_location(team_name):
+    WEBSITE_URL = 'https://int.soccerway.com'
+
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    agent = {
+        "User-Agent": 'Mozilla/5.0'}
+
+    league_url = "https://int.soccerway.com/national/bulgaria/a-pfg/20222023/regular-season/r70062/"
+    page = requests.get(league_url, headers=agent)
+    soup = BeautifulSoup(page.content, 'html.parser')
+
+    football_clubs = []
+
+    test = soup.find_all('div',
+                         id='page_competition_1_block_competition_tables_11_block_competition_league_table_1')
+
+    scraped_team_info = soup.find_all('td', class_='text team large-link')
+
+    for el in scraped_team_info:
+        scraped_team_url = el.contents[0].attrs['href']
+        scraped_team_name = el.contents[0].attrs['title']
+        # football_clubs.append({scraped_team_name: scraped_team_url})
+        football_clubs.append({scraped_team_url: scraped_team_name})
+
+    teams = export_team_names()
+
+    replace_team_names = []
+
+    for t_name in teams.values():
+        replace_team_names.append(t_name)
+
+    counter = 0
+
+    while len(football_clubs) > len(replace_team_names):
+        football_clubs.pop()
+
+    for team in range(len(football_clubs)):
+        for key, value in football_clubs[team].items():
+            football_clubs[team][key] = replace_team_names[counter]
+            counter += 1
+
+    desired_url = ""
+    for team in range(len(football_clubs)):
+        for key, value in football_clubs[team].items():
+            if value == team_name:
+                desired_url = WEBSITE_URL + key
+                break
+        else:
+            continue
+        break
+    page = requests.get(desired_url, headers=agent)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    team = soup.find_all('dd')
+    location_info = []
+    for i in team:
+        refactoring_location_1 = i.text.replace("\n ", "")
+        refactored_location = refactoring_location_1.replace("  ", "")
+        location_info.append(refactored_location)
+
+    return location_info
+
+
+export_team_location('Levski Sofia')
