@@ -139,11 +139,15 @@ def export_team_location(team_name):
     soup = BeautifulSoup(page.content, 'html.parser')
     team = soup.find_all('dd')
     location_info = []
-    for i in team:
-        refactoring_location_1 = i.text.replace("\n ", "")
-        refactored_location = refactoring_location_1.replace("  ", "")
-        location_info.append(refactored_location)
+    unedited_location = team[1].text
+    first_edit_location = unedited_location.replace("\n ", "")
+    second_edit_location = first_edit_location.replace("  ", "")
+
+    location_info.append(second_edit_location)
+
+    # for i in team:
+    #     refactoring_location_1 = i.text.replace("\n ", "")
+    #     refactored_location = refactoring_location_1.replace("  ", "")
+    #     location_info.append(refactored_location)
 
     return location_info
-
-
