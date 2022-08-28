@@ -4,6 +4,7 @@ from core.teams.BulgarianLeague import export_next_fixture
 from core.teams.BulgarianLeague import export_last_3_results
 from core.teams.BulgarianLeague import export_team_location
 
+
 # Create your views here.
 
 def frontpage(request):
@@ -44,3 +45,12 @@ def team(request):
     context['last_3_matches'] = last_3_matches
     context['team_location'] = team_location
     return render(request, 'team.html', context)
+
+
+def travel_next_game(request):
+    context = {}
+    team_name = request.POST.get('team_name')
+    # team_name = team_name.capitalize()
+    context['team_name'] = team_name
+
+    return render(request, 'travelNextGame.html', context)

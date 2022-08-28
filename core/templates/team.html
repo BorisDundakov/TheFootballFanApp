@@ -27,6 +27,13 @@
     <p>Stadium location: </p>
     <p>Based in: {{ team_location.1 }} Bulgaria</p>
 
+    <div class="container">
+        <form action="{% url 'travel_next_game' %}" method="post" id="travelNextGameFRM">
+            {% csrf_token %}
+            <button type="submit" id="travelNextGameBTN">How can I get to the next game?</button>
+
+        </form>
+    </div>
 
 </head>
 <body>

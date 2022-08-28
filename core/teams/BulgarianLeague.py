@@ -147,4 +147,3 @@ def export_team_location(team_name):
     return location_info
 
 
-export_team_location('Levski Sofia')
