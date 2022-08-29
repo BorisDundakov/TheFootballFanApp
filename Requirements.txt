@@ -1,0 +1,12 @@
+-Python GDAL [GDAL-3.4.2-cp37-cp37m-win32.whl]
+-Django
+-Python
+-Internet connection
+requests~=2.28.1
+bs4~=0.0.1
+beautifulsoup4~=4.11.1
+Django~=3.2.15
+GDAL~=3.4.2
+GEOS
+PROJ.4
+GeoIP
