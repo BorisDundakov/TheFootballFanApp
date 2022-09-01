@@ -5,9 +5,6 @@ from core.teams.BulgarianLeague import export_last_3_results
 from core.teams.BulgarianLeague import export_team_location
 
 
-import gdal
-import ogr
-
 # Create your views here.
 
 def frontpage(request):

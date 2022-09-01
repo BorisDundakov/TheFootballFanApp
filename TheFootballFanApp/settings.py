@@ -28,6 +28,20 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+if os.name == 'nt':
+    import platform
+
+    OSGEO4W = r"C:\OSGeo4W"
+    if '32' in platform.architecture()[0]:
+        OSGEO4W += "32"
+    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+
+    os.environ['GDAL_DATA'] = OSGEO4W + r"C:\OSGeo4W\share\gdal"
+    os.environ['PROJ_LIB'] = OSGEO4W + r"C:\OSGeo4W\share\proj"
+    os.environ['PATH'] = OSGEO4W + r"C:\OSGeo4W\bin;" + os.environ['PATH']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -133,18 +147,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin'
-
-import os
-
-if os.name == 'nt':
-    import platform
-
-    OSGEO4W = r"C:\OSGeo4W"
-    if '64' in platform.architecture()[0]:
-        OSGEO4W += "64"
-    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
-    os.environ['OSGEO4W_ROOT'] = OSGEO4W
-    os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
-    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
-    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+GDAL_LIBRARY_PATH = r'C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\GDAL-3.4.3.dist-info'
+#GDAL_LIBRARY_PATH = r'C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\GDAL-3.4.3.dist-info'
+#
+# import os
+#
+# if os.name == 'nt':
+#     import platform
+#
+#     OSGEO4W = r"D:\C\OSGeo4W"
+#     if '64' in platform.architecture()[0]:
+#         OSGEO4W += "64"
+#     assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+#     os.environ['OSGEO4W_ROOT'] = OSGEO4W
+#     os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
+#     os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+#     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
