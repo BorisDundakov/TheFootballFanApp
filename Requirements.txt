@@ -9,6 +9,7 @@ GDAL~=3.4.2
 GEOS
 PROJ.4
 GeoIP
-
+numpy
+postgresql
 
 TIP!- use conda to install packages, not pip!
