@@ -2,11 +2,13 @@
 -Django
 -Python
 -Internet connection
-requests~=2.28.1
-bs4~=0.0.1
+requests~=2.27.1
 beautifulsoup4~=4.11.1
-Django~=3.2.15
+Django~=3.2.5
 GDAL~=3.4.2
 GEOS
 PROJ.4
 GeoIP
+
+
+TIP!- use conda to install packages, not pip!
