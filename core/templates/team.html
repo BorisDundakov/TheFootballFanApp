@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/team.css' %}">
-    # stadium to appear as backround
+    # stadium to appear as background
 
     <p>Team Name: {{ team_name }}</p>
     <p>Next Fixture: {{ home }} vs {{ away }}</p>
@@ -30,7 +30,10 @@
     <div class="container">
         <form action="{% url 'travel_next_game' %}" method="post" id="travelNextGameFRM">
             {% csrf_token %}
-            <button type="submit" id="travelNextGameBTN">How can I get to the next game?</button>
+
+            <button type="submit" id="travelNextGameBTN" form="travelNextGameFRM" name="team_name" value="{{ team_name }}">How can I get
+                to the next game?
+            </button>
 
         </form>
     </div>

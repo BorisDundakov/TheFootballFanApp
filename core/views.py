@@ -14,7 +14,6 @@ def frontpage(request):
 def team(request):
     context = {}
     team_name = request.POST.get('team_name')
-    # team_name = team_name.capitalize()
     context['team_name'] = team_name
 
     teams = export_team_names()
@@ -50,7 +49,6 @@ def team(request):
 def travel_next_game(request):
     context = {}
     team_name = request.POST.get('team_name')
-    # team_name = team_name.capitalize()
     context['team_name'] = team_name
 
     return render(request, 'travelNextGame.html', context)
