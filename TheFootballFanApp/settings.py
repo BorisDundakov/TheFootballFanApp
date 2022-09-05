@@ -45,7 +45,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'DBFootballFanApp_Spatial',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': '133',
         'HOST': 'localhost',
         'PORT': '5432',
     }
