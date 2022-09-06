@@ -31,7 +31,7 @@
         <form action="{% url 'travel_next_game' %}" method="post" id="travelNextGameFRM">
             {% csrf_token %}
 
-            <button type="submit" id="travelNextGameBTN" form="travelNextGameFRM" name="team_name" value="{{ team_name }}">How can I get
+            <button type="submit" id="travelNextGameBTN" form="travelNextGameFRM" name="team_name" value="{{ home }}, {{ away }}">How can I get
                 to the next game?
             </button>
 

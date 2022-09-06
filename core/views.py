@@ -4,6 +4,8 @@ from core.teams.BulgarianLeague import export_next_fixture
 from core.teams.BulgarianLeague import export_last_3_results
 from core.teams.BulgarianLeague import export_team_location
 
+import googlemaps
+
 
 # Create your views here.
 
@@ -42,13 +44,35 @@ def team(request):
     context['home'] = next_match['home']
     context['away'] = next_match['away']
     context['last_3_matches'] = last_3_matches
+    # TODO: Fix Team location so that it shows the actual address of the stadium
     context['team_location'] = team_location
     return render(request, 'team.html', context)
 
 
 def travel_next_game(request):
     context = {}
-    team_name = request.POST.get('team_name')
-    context['team_name'] = team_name
+    teams = request.POST.get('team_name')
+
+    context['home'] = teams.split(',')[0]
+    context['away'] = teams.split(',')[1]
+
+    next_location = export_team_location(context['home'])
+    context['location'] = next_location
+
+    distance = 0
+    current_location = ''
+    # gmaps = googlemaps.Client()
+    # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+
+    # TODO 0): think of program logistics
+    # TODO 1): extract the stadium location of the home team --> web scraping
+    # TODO 2): get the current location of the user
+    # TODO 3): calculate the distance between the 2 points
+    # TODO 4): locate the nearest train stops on БДЖ to the starting and end locations
+    # TODO 5): find a trip between the БДЖ stops
+    # TODO 6): display a list of the possible trips as buttons --> starting date & time, end date & time, price
+    # TODO 7): clicking the button would redirect you to the БДЖ website for buying the tickets
+    # TODO FUTURE:
+    # TODO - integrate google maps, bus alternatives, fuel expenditure (go by car alternative price comparison)
 
     return render(request, 'travelNextGame.html', context)
