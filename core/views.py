@@ -3,6 +3,7 @@ from core.teams.BulgarianLeague import export_team_names
 from core.teams.BulgarianLeague import export_next_fixture
 from core.teams.BulgarianLeague import export_last_3_results
 from core.teams.BulgarianLeague import export_team_location
+from core.teams.BulgarianLeague import load_bing_maps
 
 import googlemaps
 
@@ -58,6 +59,9 @@ def travel_next_game(request):
 
     next_location = export_team_location(context['home'])
     context['location'] = next_location
+
+    bing_maps_link = load_bing_maps(next_location)
+    context['maps'] = bing_maps_link
 
     distance = 0
     current_location = ''

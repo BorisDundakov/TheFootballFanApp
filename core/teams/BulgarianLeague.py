@@ -138,16 +138,31 @@ def export_team_location(team_name):
     page = requests.get(desired_url, headers=agent)
     soup = BeautifulSoup(page.content, 'html.parser')
     team = soup.find_all('dd')
-    location_info = []
+    location_info = ''
     unedited_location = team[1].text
     first_edit_location = unedited_location.replace("\n ", "")
     second_edit_location = first_edit_location.replace("  ", "")
 
-    location_info.append(second_edit_location)
-
-    # for i in team:
-    #     refactoring_location_1 = i.text.replace("\n ", "")
-    #     refactored_location = refactoring_location_1.replace("  ", "")
-    #     location_info.append(refactored_location)
+    location_info = second_edit_location
 
     return location_info
+
+
+def load_bing_maps(location_name):
+    bing_constant = 'https://www.bing.com/maps?q=+'
+    # target_url = 'https://www.bing.com/maps?q=+bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia'
+
+    location_url = location_name.replace(" ", "+")
+    location_url = location_url.replace(",", "%2C")
+    bing_address = bing_constant + location_url
+    return bing_address
+
+
+def estimated_distance(location_name):
+    current_location = ''
+    target_location = location_name
+    # target_location_coordinates = target_location.get_coordinates()
+    # distance = calc_distance(current_location ,target_location)
+    # return distance
+
+    return

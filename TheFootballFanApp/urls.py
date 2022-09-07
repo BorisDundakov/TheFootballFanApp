@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.frontpage, name='frontpage'),
     path('team/', views.team, name='team'),
-    path('travel/', views.travel_next_game, name='travel_next_game')
+    path('travel/', views.travel_next_game, name='travel_next_game'),
+    path('next_location/', views.load_bing_maps, name='next_location')
 ]

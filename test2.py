@@ -1,6 +1,0 @@
-import gdal
-
-
-
-
-
