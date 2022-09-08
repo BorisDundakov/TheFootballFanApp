@@ -11,5 +11,9 @@ PROJ.4
 GeoIP
 numpy
 postgresql
+Chrome Webdriver
+scrapy
+Download Chrome Webdriver
+
 
 TIP!- use conda to install packages, not pip!

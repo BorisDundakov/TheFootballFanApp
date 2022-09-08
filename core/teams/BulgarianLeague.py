@@ -2,6 +2,14 @@ from bs4 import BeautifulSoup
 import requests
 import ssl
 import urllib.request, urllib.parse, urllib.error
+import scrapy
+from scrapy.spiders import CrawlSpider
+from scrapy.utils import response
+
+from lxml import html
+from lxml import etree as ET
+
+from selenium import webdriver
 
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
@@ -98,9 +106,6 @@ def export_team_location(team_name):
 
     football_clubs = []
 
-    test = soup.find_all('div',
-                         id='page_competition_1_block_competition_tables_11_block_competition_league_table_1')
-
     scraped_team_info = soup.find_all('td', class_='text team large-link')
 
     for el in scraped_team_info:
@@ -159,10 +164,15 @@ def load_bing_maps(location_name):
 
 
 def estimated_distance(location_name):
-    current_location = ''
-    target_location = location_name
-    # target_location_coordinates = target_location.get_coordinates()
-    # distance = calc_distance(current_location ,target_location)
-    # return distance
+    # Using Selenium
 
-    return
+    PATH = "C:\Program Files (x86)\chromedriver.exe"
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(PATH, options=op)
+    driver.get("https://www.bing.com/maps?q=+bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia")
+    s = driver.find_element_by_class_name('geochainModuleLatLong').text
+    print(s)
+
+
+estimated_distance('bul. Rozhen 26 1220 Sofia')
