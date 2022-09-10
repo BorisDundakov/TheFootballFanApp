@@ -2,14 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import ssl
 import urllib.request, urllib.parse, urllib.error
-import scrapy
-from scrapy.spiders import CrawlSpider
-from scrapy.utils import response
-
-from lxml import html
-from lxml import etree as ET
-
+from urllib.request import urlopen
 from selenium import webdriver
+import geocoder
+import geopy.distance
+import json
 
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
@@ -163,16 +160,37 @@ def load_bing_maps(location_name):
     return bing_address
 
 
-def estimated_distance(location_name):
+def distance_to_stadium(bing_address):
     # Using Selenium
 
-    PATH = "C:\Program Files (x86)\chromedriver.exe"
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)
-    driver.get("https://www.bing.com/maps?q=+bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia")
-    s = driver.find_element_by_class_name('geochainModuleLatLong').text
-    print(s)
+    driver.get(bing_address)
+    str_stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
+    str_stadium_coordinates = str_stadium_coordinates.replace(" ", "")
+    # stadium_coordinates = (43.215830, 27.931390)
+    stadium_coordinates = tuple(map(float, str_stadium_coordinates.split(',')))
+    # CONCLUSION == POINTS ARE CORRECT
+    driver.close()
+    myloc = geocoder.ip('me')
+    current_loc = myloc.latlng
+    current_location = ','.join([str(el) for el in current_loc])
+    # distance = geopy.distance.geodesic(current_location, stadium_coordinates).km
+    time_to_travel_by_car = 0
+    # https://www.google.com/maps/dir/43.203014,23.547599/42.6975,23.3241/
+    maps_const = "https://www.google.com/maps/dir/"
 
+    maps_time_address = maps_const + f"{current_location}/{str_stadium_coordinates}"
 
-estimated_distance('bul. Rozhen 26 1220 Sofia')
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(PATH, options=op)
+    driver.get(maps_time_address)
+
+    time_required = driver.find_element_by_css_selector(
+        '#section-directions-trip-0 > div.MespJc > div:nth-child(1) > div.XdKEzd > div.Fk3sm.fontHeadlineSmall.delay-medium > span:nth-child(1)')
+
+    # https://www.bing.com/maps?q=++bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia+
+    # https://www.bing.com/maps?q=++bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia+

@@ -12,8 +12,9 @@ GeoIP
 numpy
 postgresql
 Chrome Webdriver
-scrapy
 Download Chrome Webdriver
+geopy~=2.2.0
 
-
-TIP!- use conda to install packages, not pip!
+TIP!- use conda to install packages that fail to install with pip!
+geocoder~=1.38.1
+selenium~=3.141.0

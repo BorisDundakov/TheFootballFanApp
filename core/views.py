@@ -4,8 +4,7 @@ from core.teams.BulgarianLeague import export_next_fixture
 from core.teams.BulgarianLeague import export_last_3_results
 from core.teams.BulgarianLeague import export_team_location
 from core.teams.BulgarianLeague import load_bing_maps
-
-import googlemaps
+from core.teams.BulgarianLeague import distance_to_stadium
 
 
 # Create your views here.
@@ -63,8 +62,12 @@ def travel_next_game(request):
     bing_maps_link = load_bing_maps(next_location)
     context['maps'] = bing_maps_link
 
+    distance = distance_to_stadium(bing_maps_link)
+    context['distance'] = distance
+
     distance = 0
     current_location = ''
+
     # gmaps = googlemaps.Client()
     # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
