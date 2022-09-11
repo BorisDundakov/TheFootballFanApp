@@ -142,7 +142,7 @@ def export_team_location(team_name):
     page = requests.get(desired_url, headers=agent)
     soup = BeautifulSoup(page.content, 'html.parser')
     team = soup.find_all('dd')
-    location_info = ''
+
     unedited_location = team[1].text
     first_edit_location = unedited_location.replace("\n ", "")
     second_edit_location = first_edit_location.replace("  ", "")
@@ -154,11 +154,11 @@ def export_team_location(team_name):
 
 def load_bing_maps(location_name):
     bing_constant = 'https://www.bing.com/maps?q=+'
-    # target_url = 'https://www.bing.com/maps?q=+bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia'
 
     location_url = location_name.replace(" ", "+")
     location_url = location_url.replace(",", "%2C")
     bing_address = bing_constant + location_url
+
     return bing_address
 
 
@@ -170,20 +170,21 @@ def distance_to_stadium(bing_address):
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(bing_address)
-    str_stadium_coordinates = None
-    while str_stadium_coordinates is None:
+
+    # ACCEPTING COOKIES
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+
+    stadium_coordinates = None
+    while stadium_coordinates is None:
         try:
-            str_stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
+            stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
         except selenium.common.exceptions.NoSuchElementException:
             pass
 
     myloc = geocoder.ip('me')
-    current_loc = (myloc.latlng)
+    current_loc = myloc.latlng
     maps_time_address = "https://www.bing.com/maps/"
     driver.get(maps_time_address)
-
-    # ACCEPTING COOKIES
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
 
     directions_btn = driver.find_element_by_class_name("directionsIcon")
     directions_btn.click()
@@ -192,12 +193,11 @@ def distance_to_stadium(bing_address):
     start = driver.find_element_by_css_selector(".start+ input")
     end = driver.find_element_by_css_selector(".end+ input")
 
-    from_loc = (tuple([str(i) for i in current_loc]))
-    to_loc = (tuple(map(str, str_stadium_coordinates.split(', '))))
+    from_loc = (', '.join(str(e) for e in current_loc))
+    to_loc = stadium_coordinates
 
     start.send_keys(from_loc)
     end.send_keys(to_loc)
-    # res = tuple(map(int, test_str.split(', ')))
 
     go_btn = driver.find_element_by_class_name("dirBtnGo.commonButton")
     go_btn.click()
@@ -211,8 +211,10 @@ def distance_to_stadium(bing_address):
         except selenium.common.exceptions.NoSuchElementException:
             pass
 
-    travel_time = f"{time_hours.text} h: {time_minutes.text} min"
+    if time_hours.text == "":
+        travel_time = f"{time_minutes.text} min"
+    else:
+        travel_time = f"{time_hours.text} h: {time_minutes.text} min"
+
     return travel_time
 
-    # https://www.bing.com/maps?q=++bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia+
-    # https://www.bing.com/maps?q=++bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia+
