@@ -1,12 +1,14 @@
 from bs4 import BeautifulSoup
 import requests
 import ssl
-import urllib.request, urllib.parse, urllib.error
-from urllib.request import urlopen
-from selenium import webdriver
 import geocoder
-import geopy.distance
-import json
+import time
+
+import selenium.common.exceptions
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
@@ -168,29 +170,49 @@ def distance_to_stadium(bing_address):
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(bing_address)
-    str_stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
-    str_stadium_coordinates = str_stadium_coordinates.replace(" ", "")
-    # stadium_coordinates = (43.215830, 27.931390)
-    stadium_coordinates = tuple(map(float, str_stadium_coordinates.split(',')))
-    # CONCLUSION == POINTS ARE CORRECT
-    driver.close()
+    str_stadium_coordinates = None
+    while str_stadium_coordinates is None:
+        try:
+            str_stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+
     myloc = geocoder.ip('me')
-    current_loc = myloc.latlng
-    current_location = ','.join([str(el) for el in current_loc])
-    # distance = geopy.distance.geodesic(current_location, stadium_coordinates).km
-    time_to_travel_by_car = 0
-    # https://www.google.com/maps/dir/43.203014,23.547599/42.6975,23.3241/
-    maps_const = "https://www.google.com/maps/dir/"
-
-    maps_time_address = maps_const + f"{current_location}/{str_stadium_coordinates}"
-
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    driver = webdriver.Chrome(PATH, options=op)
+    current_loc = (myloc.latlng)
+    maps_time_address = "https://www.bing.com/maps/"
     driver.get(maps_time_address)
 
-    time_required = driver.find_element_by_css_selector(
-        '#section-directions-trip-0 > div.MespJc > div:nth-child(1) > div.XdKEzd > div.Fk3sm.fontHeadlineSmall.delay-medium > span:nth-child(1)')
+    # ACCEPTING COOKIES
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+
+    directions_btn = driver.find_element_by_class_name("directionsIcon")
+    directions_btn.click()
+    time.sleep(2)
+
+    start = driver.find_element_by_css_selector(".start+ input")
+    end = driver.find_element_by_css_selector(".end+ input")
+
+    from_loc = (tuple([str(i) for i in current_loc]))
+    to_loc = (tuple(map(str, str_stadium_coordinates.split(', '))))
+
+    start.send_keys(from_loc)
+    end.send_keys(to_loc)
+    # res = tuple(map(int, test_str.split(', ')))
+
+    go_btn = driver.find_element_by_class_name("dirBtnGo.commonButton")
+    go_btn.click()
+
+    time_minutes = None
+    time_hours = None
+    while time_hours is None:
+        try:
+            time_hours = driver.find_element_by_class_name('drHours')
+            time_minutes = driver.find_element_by_class_name('drMins')
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+
+    travel_time = f"{time_hours.text} h: {time_minutes.text} min"
+    return travel_time
 
     # https://www.bing.com/maps?q=++bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia+
     # https://www.bing.com/maps?q=++bul.+Dragan+Tzankov+3%2C+Borisova+Gradina+1164+Sofia+
