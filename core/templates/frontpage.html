@@ -32,23 +32,17 @@
     <section class="latest_results">
         <p class="title">latest results</p>
         <h2>Gameweek: {{ gameweek }}</h2>
-        {% with counter=0 %}
+        {% with counter=1 %}
 
-            {% for all in results %}
-                {% for ind_game in all %}
-                    {% for team,score in ind_game.items %}
-                        {% with counter=counter+1 as counter%}
-                        {% endwith %}
-                        {% if counter|divisibleby:2 %}
-                            <p>{{ team }} {{ score }}</p>
-                        {% endif %}
+            {% for current_result in results %}
 
-                    {% endfor %}
-                {% endfor %}
+                <p>{{ current_result }}</p>
+
             {% endfor %}
         {% endwith %}
 
     </section>
+
 
 
 </div>
