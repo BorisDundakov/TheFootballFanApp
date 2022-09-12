@@ -33,11 +33,37 @@ def export_team_names():
     return football_clubs
 
 
+def export_matchday_results():
+    league_url = "https://www.flashscore.com/football/bulgaria/parva-liga/"
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(PATH, options=op)
+    driver.get(league_url)
+
+    # ACCEPTING COOKIES
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))).click()
+
+    gameweek = driver.find_element_by_class_name("event__round.event__round--static").text
+
+    gameweek_results = []
+
+    home_teams = driver.find_elements_by_class_name("event__participant.event__participant--home")
+    home_goals = driver.find_elements_by_class_name("event__score.event__score--home")
+    away_teams = driver.find_elements_by_class_name("event__participant.event__participant--away")
+    away_goals = driver.find_elements_by_class_name("event__score.event__score--away")
+
+    for el in range(len(home_teams)):
+        if el == 8:
+            return gameweek, gameweek_results
+
+        gameweek_results.append(
+            [{home_teams[el].text: home_goals[el].text}, {away_teams[el].text: away_goals[el].text}])
+
+
 def export_next_fixture(team_name, team_number):
     team = team_name.lower()
     team = team.replace(" ", "-")
-    # https://www.livescore.com/en/football/team/levski-sofia/6552/overview/
-    # https://www.livescore.com/en/football/team/team-name/1111/overview/
     result = {"home": 0, "away": 0}
     url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
@@ -217,4 +243,3 @@ def distance_to_stadium(bing_address):
         travel_time = f"{time_hours.text} h: {time_minutes.text} min"
 
     return travel_time
-

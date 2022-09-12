@@ -5,12 +5,17 @@ from core.teams.BulgarianLeague import export_last_3_results
 from core.teams.BulgarianLeague import export_team_location
 from core.teams.BulgarianLeague import load_bing_maps
 from core.teams.BulgarianLeague import distance_to_stadium
+from core.teams.BulgarianLeague import export_matchday_results
 
 
 # Create your views here.
 
 def frontpage(request):
-    return render(request, 'frontpage.html')
+    context = {}
+    matchday_results = export_matchday_results()
+    context['gameweek'] = matchday_results[0]
+    context['results'] = matchday_results[1]
+    return render(request, 'frontpage.html', context)
 
 
 def team(request):

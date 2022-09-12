@@ -2,34 +2,70 @@
 {% load static %}
 <html lang="en">
 <head>
+    <meta charset=utf-8>
+    <title>ФутБОЛЕН запалянко</title>
     <img src="https://media.istockphoto.com/photos/soccer-fans-at-stadium-picture-id469569148?k=20&m=469569148&s=612x612&w=0&h=nW-BqRI6p9iqfexKgUHxmyWFj_bPbZCjHnE5RpkzkSc="
          alt="Frontpage logo" width="100" height="80">
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/frontpage.css' %}">
-    <h1>
-        The Ultimate Football Fan App
-    </h1>
-
-    <title>
-        The Ultimate Football Fan App
-    </title>
-
-    <div class="container">
-        <form action="{% url 'team' %}" method="post" id="submitTeamFRM">
-            {% csrf_token %}
-
-            <input type="text" placeholder="enter team/player name here" name="team_name" form = "submitTeamFRM">
-
-            <button type="submit" id="teamBTN">Search</button>
-
-        </form>
-    </div>
 
 </head>
-<body class="bg-teal-600">
-<div>
-    <a href="/" class="text-xl text-white"></a>
+
+<body>
+<div class="wrapper">
+    <header>
+        <a href="#" class="logo">Фут<span>БОЛЕН</span> запал<span>янко</span></a>
+
+        <nav>
+            <ul>
+                <li><a href="frontpage.html">Home</a></li>
+                <li><a href="#">Teams</a></li>
+                <li><a href="#">Competitions</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>The Bulgarian football fan travel guide</h1>
+
+    </section>
+    <section class="latest_results">
+        <p class="title">latest results</p>
+        <h2>Gameweek: {{ gameweek }}</h2>
+        {% with counter=0 %}
+
+            {% for all in results %}
+                {% for ind_game in all %}
+                    {% for team,score in ind_game.items %}
+                        {% with counter=counter+1 as counter%}
+                        {% endwith %}
+                        {% if counter|divisibleby:2 %}
+                            <p>{{ team }} {{ score }}</p>
+                        {% endif %}
+
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% endwith %}
+
+    </section>
+
+
 </div>
 
+
+<div class="container">
+    <form action="{% url 'team' %}" method="post" id="submitTeamFRM">
+        {% csrf_token %}
+
+        <input type="text" placeholder="enter team/player name here" name="team_name" form="submitTeamFRM">
+
+        <button type="submit" id="teamBTN">Search</button>
+
+    </form>
+</div>
+
+
 </body>
+
 </html>
