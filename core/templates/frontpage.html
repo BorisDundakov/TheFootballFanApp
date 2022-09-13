@@ -35,14 +35,22 @@
         {% with counter=1 %}
 
             {% for current_result in results %}
+                {% for match_details in current_result %}
+                    {% for team,goals in match_details.items %}
+                        {% if forloop.parentloop.revcounter|divisibleby:2%}
+                            <br>
+                            {{ team }} {{ goals }} :
+                        {% else %}
+                            {{ team }} {{ goals }}
+                        {% endif %}
 
-                <p>{{ current_result }}</p>
+                    {% endfor %}
+                {% endfor %}
 
             {% endfor %}
         {% endwith %}
 
     </section>
-
 
 
 </div>
