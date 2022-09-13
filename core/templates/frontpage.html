@@ -27,11 +27,9 @@
     </header>
     <section class="hero">
         <h1>The Bulgarian football fan travel guide</h1>
-
     </section>
     <section class="latest_results">
-        <p class="title">latest results</p>
-        <h2>Gameweek: {{ gameweek }}</h2>
+        <h2>{{ gameweek }}</h2>
         {% with counter=1 %}
 
             {% for current_result in results %}

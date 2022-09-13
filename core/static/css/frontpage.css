@@ -5,7 +5,16 @@ body {
 
 h1{
     text-align: center;
+
 }
+
+.latest_results{
+    text-align: center;
+    background-color: green;
+    justify-content: space-evenly;
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
 
 .container{
     width: 100%;
@@ -14,6 +23,7 @@ h1{
     background-color: green;
     display: flex;
     align-items: center;
+
 
 }
 form{
@@ -28,10 +38,15 @@ form input{
     outline:none;
 }
 form button{
-    background: tomato;
+    background: darkorange;
     padding: 10px;
     border: none;
     outline: none;
     letter-spacing: 1px;
     cursor: pointer;
+}
+
+li{
+
+    right: 0;
 }
