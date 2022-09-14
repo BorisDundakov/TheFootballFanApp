@@ -1,15 +1,33 @@
 body {
     background-color: green;
+    display: grid;
 }
 
 h1 {
-    text-align: center;
+    text-align: left;
+}
 
+
+.nav-sidebar {
+    /*must go to the right somehow*/
+    text-align: right;
+}
+
+
+.motto {
+    text-align: center;
+    font-style: italic;
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
+.gameweek-results {
+    font-style: oblique;
 }
 
 .latest_results {
+    /* ':' must be centered */
+
     text-align: center;
-    background-color: green;
     justify-content: space-evenly;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
 }
@@ -26,13 +44,12 @@ h1 {
 
 }
 
-li {
-    top: 0;
-    display: grid;
-    float: right;
-    word-spacing: normal;
-    margin-left: 3%;
-}
+/*.wrapper {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+
+/*}*/
 
 form {
     margin-top: 50px;

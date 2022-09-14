@@ -4,42 +4,44 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/team.css' %}">
+    <title>{{ team_name }}</title>
     # stadium to appear as background
 
-    <p>Team Name: {{ team_name }}</p>
-    <p>Next Fixture: {{ home }} vs {{ away }}</p>
-    <p>Previous Fixture:     {% for key,value in last_3_matches.0.items %}
-        {{ key }} - {{ value }}
-    {% endfor %}
-    </p>
-    <p>Last 3 games:
-        <br>
-        {% for ind_match in last_3_matches %}
-            {% for key,value in ind_match.items %}
-                {{ key }} - {{ value }}
-                {% if forloop.counter|divisibleby:2 %}
-                    <br>
-
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
-
-    <p>Stadium location: </p>
-    <p>Based in: {{ team_location.0 }} Bulgaria</p>
-
-    <div class="container">
-        <form action="{% url 'travel_next_game' %}" method="post" id="travelNextGameFRM">
-            {% csrf_token %}
-
-            <button type="submit" id="travelNextGameBTN" form="travelNextGameFRM" name="team_name" value="{{ home }}, {{ away }}">How can I get
-                to the next game?
-            </button>
-
-        </form>
-    </div>
 
 </head>
 <body>
+<h1 class="team-name">{{ team_name }}</h1>
+
+<p>Next Fixture: {{ home }} vs {{ away }}</p>
+<p>Previous Fixture:     {% for key,value in last_3_matches.0.items %}
+    {{ key }} - {{ value }}
+{% endfor %}
+</p>
+<p>Last 3 games:
+    <br>
+    {% for ind_match in last_3_matches %}
+        {% for key,value in ind_match.items %}
+            {{ key }} - {{ value }}
+            {% if forloop.counter|divisibleby:2 %}
+                <br>
+
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+<p>Stadium location: {{ team_location }}, Bulgaria </p>
+
+<div class="button">
+    <form action="{% url 'travel_next_game' %}" method="post" id="travelNextGameFRM">
+        {% csrf_token %}
+
+        <button type="submit" id="travelNextGameBTN" form="travelNextGameFRM" name="team_name"
+                value="{{ home }}, {{ away }}">How can I get
+            to the next game?
+        </button>
+
+    </form>
+</div>
 
 </body>
 </html>

@@ -58,6 +58,7 @@ def export_matchday_results():
             return gameweek, gameweek_results
 
         gameweek_results.append(
+
             [{home_teams[el].text: home_goals[el].text}, {away_teams[el].text: away_goals[el].text}])
 
 

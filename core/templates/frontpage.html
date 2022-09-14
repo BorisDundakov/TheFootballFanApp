@@ -11,55 +11,51 @@
 </head>
 
 <body>
-<div class="wrapper">
-    <img src="https://media.istockphoto.com/photos/soccer-fans-at-stadium-picture-id469569148?k=20&m=469569148&s=612x612&w=0&h=nW-BqRI6p9iqfexKgUHxmyWFj_bPbZCjHnE5RpkzkSc="
-         alt="Frontpage logo" width="100" height="80">
-    <header>
-        <a href="#" class="logo">Фут<span>БОЛЕН</span> запал<span>янко</span></a>
 
-        <nav>
-            <ul>
-                <li><a href="frontpage.html">Home</a></li>
-                <li><a href="#">Teams</a></li>
-                <li><a href="#">Competitions</a></li>
+{#<img src="https://media.istockphoto.com/photos/soccer-fans-at-stadium-picture-id469569148?k=20&m=469569148&s=612x612&w=0&h=nW-BqRI6p9iqfexKgUHxmyWFj_bPbZCjHnE5RpkzkSc="#}
+{#         alt="Frontpage logo" width="100" height="80">#}
 
-            </ul>
-        </nav>
-    </header>
-    <section class="hero">
-        <h1>The Bulgarian football fan travel guide</h1>
-    </section>
-    <section class="latest_results">
-        <h2>{{ gameweek }}</h2>
-        {% with counter=1 %}
+<h1 class="logo">
+    <a href="#">Фут<span>БОЛЕН</span> запал<span>янко</span></a>
+</h1>
+<nav class="nav-sidebar">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Teams</a></li>
+        <li><a href="#">Competitions</a></li>
 
-            {% for current_result in results %}
-                {% for match_details in current_result %}
-                    {% for team,goals in match_details.items %}
-                        {% if forloop.parentloop.revcounter|divisibleby:2 %}
-                            <br>
-                            {{ team }} {{ goals }} :
-                        {% else %}
-                            {{ team }} {{ goals }}
-                        {% endif %}
+    </ul>
+</nav>
 
-                    {% endfor %}
+<h2 class="motto">The Bulgarian football fan travel guide</h2>
+<section class="latest_results">
+    <h2 class="gameweek-results">{{ gameweek }}</h2>
+    {% with counter=1 %}
+
+        {% for current_result in results %}
+            {% for match_details in current_result %}
+                {% for team,goals in match_details.items %}
+                    {% if forloop.parentloop.revcounter|divisibleby:2 %}
+                        <br>
+                        {{ team }} {{ goals }} :
+                    {% else %}
+                        {{ team }} {{ goals }}
+                    {% endif %}
+
                 {% endfor %}
-
             {% endfor %}
-        {% endwith %}
 
-    </section>
+        {% endfor %}
+    {% endwith %}
 
-
-</div>
+</section>
 
 
 <div class="container">
     <form action="{% url 'team' %}" method="post" id="submitTeamFRM">
         {% csrf_token %}
 
-        <input type="text" placeholder="enter team/player name here" name="team_name" form="submitTeamFRM">
+        <input type="text" placeholder="enter team name here" name="team_name" form="submitTeamFRM">
 
         <button type="submit" id="teamBTN">Search</button>
 
