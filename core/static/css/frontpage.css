@@ -6,15 +6,8 @@ body {
 h1 {
     text-align: left;
 }
-
-
-.nav-sidebar {
-    /*must go to the right somehow*/
-    text-align: right;
-}
-
-
 .motto {
+    margin-top: 150px;
     text-align: center;
     font-style: italic;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
@@ -37,23 +30,15 @@ h1 {
     width: 100%;
     height: 100%;
     justify-content: center;
-    background-color: green;
+    /*background-color: green;*/
     display: flex;
     align-items: center;
 
 
 }
 
-/*.wrapper {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    align-items: center;*/
-
-/*}*/
-
 form {
     margin-top: 50px;
-    background-color: white;
     width: 500px;
     height: 35px;
     display: flex;
@@ -73,4 +58,52 @@ form button {
     outline: none;
     letter-spacing: 1px;
     cursor: pointer;
+}
+
+.nav-sidebar {
+    float: right;
+    padding: 10px;
+    /*background-color: white;*/
+}
+
+.nav-sidebar ul{
+    padding: 10px;
+    float: right;
+    list-style: none;
+}
+
+.nav-sidebar ul li {
+    padding: 20px;
+    float: right;
+    list-style: none;
+    /*background-color: blue;*/
+    position: relative;
+}
+
+.nav-sidebar ul li a {
+    text-decoration: none;
+    /*background-color: orangered;*/
+    display: block;
+}
+
+.nav-sidebar ul li ul {
+    position: absolute;
+    display: none;
+
+
+}
+
+.nav-sidebar ul li:hover ul{
+    display: block;
+}
+
+.nav-sidebar ul li ul li {
+
+    width:90px;
+    /*background-color: wheat;*/
+}
+
+
+.nav-sidebar ul li ul li a:hover{
+    background-color: #f3f3f3;
 }
