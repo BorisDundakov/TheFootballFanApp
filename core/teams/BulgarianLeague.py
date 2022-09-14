@@ -42,7 +42,7 @@ def export_matchday_results():
     driver.get(league_url)
 
     # ACCEPTING COOKIES
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))).click()
+    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))).click()
 
     gameweek = driver.find_element_by_class_name("event__round.event__round--static").text
 

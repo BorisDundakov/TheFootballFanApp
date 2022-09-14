@@ -1,14 +1,13 @@
 body {
     background-color: green;
-    font-size: 10px;
 }
 
-h1{
+h1 {
     text-align: center;
 
 }
 
-.latest_results{
+.latest_results {
     text-align: center;
     background-color: green;
     justify-content: space-evenly;
@@ -16,7 +15,7 @@ h1{
 }
 
 
-.container{
+.container {
     width: 100%;
     height: 100%;
     justify-content: center;
@@ -26,27 +25,35 @@ h1{
 
 
 }
-form{
+
+li {
+    top: 0;
+    display: grid;
+    float: right;
+    word-spacing: normal;
+    margin-left: 3%;
+}
+
+form {
+    margin-top: 50px;
     background-color: white;
-    width:500px;
+    width: 500px;
     height: 35px;
     display: flex;
+
 }
-form input{
-    flex:1;
-    border:none;
-    outline:none;
+
+form input {
+    flex: 1;
+    border: none;
+    outline: none;
 }
-form button{
+
+form button {
     background: darkorange;
     padding: 10px;
     border: none;
     outline: none;
     letter-spacing: 1px;
     cursor: pointer;
-}
-
-li{
-
-    right: 0;
 }
