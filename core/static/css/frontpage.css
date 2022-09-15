@@ -4,10 +4,18 @@ body {
 }
 
 h1 {
+    color: white;
     text-align: left;
 }
+
+.logo{
+    color: #f3f3f3;
+    font-size: 25px;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
 .motto {
-    margin-top: 150px;
+    margin-top: 60px;
     text-align: center;
     font-style: italic;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
@@ -61,18 +69,20 @@ form button {
 }
 
 .nav-sidebar {
+    color: white;
     float: right;
     padding: 10px;
     /*background-color: white;*/
 }
 
-.nav-sidebar ul{
+.nav-sidebar ul {
     padding: 10px;
     float: right;
     list-style: none;
 }
 
 .nav-sidebar ul li {
+    top: -90px;
     padding: 20px;
     float: right;
     list-style: none;
@@ -93,17 +103,26 @@ form button {
 
 }
 
-.nav-sidebar ul li:hover ul{
+.nav-sidebar ul li:hover ul {
     display: block;
+
 }
 
 .nav-sidebar ul li ul li {
 
-    width:90px;
+    width: 220px;
+    /*background-color: wheat;*/
+}
+
+.nav-sidebar ul li ul li a {
+    top: 115px;
+    right: 60px;
+    position: absolute;
+    width: 220px;
     /*background-color: wheat;*/
 }
 
 
-.nav-sidebar ul li ul li a:hover{
+.nav-sidebar ul li ul li a:hover {
     background-color: #f3f3f3;
 }

@@ -65,7 +65,7 @@ def export_matchday_results():
 def export_next_fixture(team_name, team_number):
     team = team_name.lower()
     team = team.replace(" ", "-")
-    result = {"home": 0, "away": 0}
+    result = {"home": 0, "away": 0, "home_badge": '', "away_badge": ''}
     url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -75,6 +75,13 @@ def export_next_fixture(team_name, team_number):
             result['home'] = team_names[team_name].text
         else:
             result['away'] = team_names[team_name].text
+
+    last_game_info = soup.find_all('div', class_='ji')
+
+    for el in last_game_info:
+        badges = el.find_all_next("img")
+        result["home_badge"] = badges[2]['src']
+        result["away_badge"] = badges[5]['src']
 
     return result
 

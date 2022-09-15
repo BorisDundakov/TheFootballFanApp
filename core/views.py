@@ -48,6 +48,8 @@ def team(request):
     team_location = export_team_location(team_name)
     context['home'] = next_match['home']
     context['away'] = next_match['away']
+    context['home_badge'] = next_match['home_badge']
+    context['away_badge'] = next_match['away_badge']
     context['last_3_matches'] = last_3_matches
     # TODO: Fix Team location so that it shows the actual address of the stadium
     context['team_location'] = team_location
