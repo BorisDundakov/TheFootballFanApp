@@ -57,14 +57,34 @@
 </section>
 
 
-<div class="container">
+<div class="teams-dropdown">
     <form action="{% url 'team' %}" method="post" id="submitTeamFRM">
         {% csrf_token %}
+        <input list="teamsDropDown" placeholder="enter team name here" name="team_name"
+               autocomplete="off" form="submitTeamFRM">
 
-        <input type="text" placeholder="enter team name here" name="team_name" form="submitTeamFRM">
+        <datalist id="teamsDropDown" class="dropdown-content">
 
-        <button type="submit" id="teamBTN">Search</button>
+            <option value="Arda Kardzhali">
+            <option value="Beroe">
+            <option value="Botev Vratsa">
+            <option value="Botev Plovdiv">
+            <option value="Levski Sofia">
+            <option value="Lokomotiv Plovdiv">
+            <option value="PFC Lokomotiv Sofia 1929">
+            <option value="Ludogorets Razgrad">
+            <option value="Pirin Blagoevgrad">
+            <option value="Septemvri Sofia">
+            <option value="Slavia Sofia">
+            <option value="Spartak Varna">
+            <option value="Hebar">
+            <option value="CSKA 1948">
+            <option value="PFC CSKA-Sofia">
+            <option value="Cherno More Varna">
 
+        </datalist>
+
+        <button type="submit" id="teamBTN" class="dropbtn">Search</button>
     </form>
 </div>
 
