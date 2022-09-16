@@ -11,21 +11,24 @@
 </head>
 <body>
 <h1 class="team-name">{{ team_name }}</h1>
-<img src="{{ home_badge }}" alt="home-team-logo">
-<img src="{{ away_badge }}" alt="away-team-logo">
+{#<img src="{{ home_badge }}" alt="home-team-logo">#}
+{#<img src="{{ away_badge }}" alt="away-team-logo">#}
 
-<p>Next Fixture: {{ home }} vs {{ away }}</p>
+<p>Next Fixture: <img src="{{ home_badge }}" alt=""> {{ home }} vs <img src="{{ away_badge }}" alt=""> {{ away }}</p>
+
+
 <p>Previous Fixture:     {% for key,value in last_3_matches.0.items %}
     {{ key }} - {{ value }}
+
 {% endfor %}
 </p>
 <p>Last 3 games:
-    <br>
+    <br><br>
     {% for ind_match in last_3_matches %}
         {% for key,value in ind_match.items %}
             {{ key }} - {{ value }}
             {% if forloop.counter|divisibleby:2 %}
-                <br>
+                <br><br>
 
             {% endif %}
         {% endfor %}

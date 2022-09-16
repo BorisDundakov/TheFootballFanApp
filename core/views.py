@@ -59,9 +59,20 @@ def team(request):
 def travel_next_game(request):
     context = {}
     teams = request.POST.get('team_name')
+    all_teams = export_team_names()
 
     context['home'] = teams.split(',')[0]
     context['away'] = teams.split(',')[1]
+
+    team_number = 0
+    for key, value in all_teams.items():
+        if value == context['home']:
+            team_number = key
+            break
+
+    next_match = export_next_fixture(context['home'], team_number)
+    context['home_badge'] = next_match['home_badge']
+    context['away_badge'] = next_match['away_badge']
 
     next_location = export_team_location(context['home'])
     context['location'] = next_location

@@ -138,16 +138,17 @@ form button {
 }
 
 .dropbtn {
-    background-color: #04AA6D;
+    background-color: orange;
     color: white;
     padding: 16px;
+    line-height: 0;
     font-size: 16px;
     border: none;
     cursor: pointer;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
+    background-color: darkorange;
 }
 
 #myInput {
