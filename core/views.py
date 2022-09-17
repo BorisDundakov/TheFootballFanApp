@@ -73,6 +73,8 @@ def travel_next_game(request):
     next_match = export_next_fixture(context['home'], team_number)
     context['home_badge'] = next_match['home_badge']
     context['away_badge'] = next_match['away_badge']
+    context['weekday'] = next_match['weekday']
+    context['game_time'] = next_match['game_time']
 
     next_location = export_team_location(context['home'])
     context['location'] = next_location
@@ -83,8 +85,6 @@ def travel_next_game(request):
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
 
-    context['weekday'] = 0
-    context['match_time'] = 0
 
     distance = 0
     current_location = ''

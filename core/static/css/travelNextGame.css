@@ -1,5 +1,11 @@
-body{
+body {
     background-color: green;
 }
 
+.match-time {
+    color: white;
+    text-align: left;
+    float: right;
+    padding: 10px;
 
+}

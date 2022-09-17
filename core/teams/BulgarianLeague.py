@@ -83,10 +83,21 @@ def export_next_fixture(team_name, team_number):
         result["home_badge"] = badges[2]['src']
         result["away_badge"] = badges[5]['src']
 
-    # result['weekday'] = 0
-    # result['match_time'] = 0
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(PATH, options=op)
+    driver.get(url)
 
+    stadium_coordinates = driver.find_element_by_class_name("ji")
+    a = stadium_coordinates.text
+    game_details = list(a.split("\n"))
 
+    game_time = game_details[1]
+    game_date = game_details[2]
+
+    result['weekday'] = game_date
+    result['game_time'] = game_time
 
     return result
 
@@ -211,7 +222,7 @@ def distance_to_stadium(bing_address):
     driver.get(bing_address)
 
     # ACCEPTING COOKIES
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
 
     stadium_coordinates = None
     while stadium_coordinates is None:
