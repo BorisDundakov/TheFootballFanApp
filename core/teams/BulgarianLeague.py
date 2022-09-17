@@ -83,6 +83,11 @@ def export_next_fixture(team_name, team_number):
         result["home_badge"] = badges[2]['src']
         result["away_badge"] = badges[5]['src']
 
+    # result['weekday'] = 0
+    # result['match_time'] = 0
+
+
+
     return result
 
 

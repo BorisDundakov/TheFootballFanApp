@@ -83,6 +83,9 @@ def travel_next_game(request):
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
 
+    context['weekday'] = 0
+    context['match_time'] = 0
+
     distance = 0
     current_location = ''
 

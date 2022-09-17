@@ -1,6 +1,7 @@
 body {
     background-color: green;
     display: grid;
+    overflow: hidden;
 }
 
 h1 {
@@ -116,15 +117,15 @@ form button {
 
 .nav-sidebar ul li ul li a {
     top: 115px;
-    right: 60px;
+    right: 175px;
     position: absolute;
-    width: 220px;
-    /*background-color: wheat;*/
+    min-width: 110px;
 }
 
 
 .nav-sidebar ul li ul li a:hover {
     background-color: #f3f3f3;
+
 }
 
 .teamsDropdown-content {

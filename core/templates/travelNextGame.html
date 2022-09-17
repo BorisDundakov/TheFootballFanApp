@@ -4,7 +4,7 @@
 <head>
     <meta charset=utf-8>
     <title>ФутБОЛЕН запалянко</title>
-
+    <link rel="stylesheet" href="{% static 'css/travelNextGame.css' %}">
 </head>
 <body>
 <div class="wrapper">
@@ -26,12 +26,12 @@
     </section>
 
 </div>
-<h2>Home:  <img src="{{ home_badge }}" alt="">  {{ home }}</h2>
-<h2>Away:  <img src="{{ away_badge }}" alt="">  {{ away }}</h2>
+<h2>Home:  <img src="{{ home_badge }}" alt="">  {{ home }} {{ weekday }}</h2>
+<h2>Away:  <img src="{{ away_badge }}" alt="">  {{ away }} {{ match_time }}</h2>
 <h3>location: {{ location }}, Bulgaria</h3>
 <h3>Driving time to location: {{ distance }}</h3>
 
-<h3>bing maps link: <a href="{{ maps }}">Stadium location</a></h3>
+<h3>How can I get there: <a href="{{ maps }}">send location</a></h3>
 
 <h3>Traveling by train time: soon...</h3>
 <h3>Buy train tickets here: soon...</h3>

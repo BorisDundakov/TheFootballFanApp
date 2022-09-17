@@ -13,6 +13,10 @@ body{
 
 
 .button{
-    color: darkorange;
+    color: orange;
+    font-family: Century, serif;
 }
 
+.button:hover{
+    color: darkorange;
+}
