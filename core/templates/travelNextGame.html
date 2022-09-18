@@ -7,28 +7,29 @@
     <link rel="stylesheet" href="{% static 'css/travelNextGame.css' %}">
 </head>
 <body>
-<div class="wrapper">
-    <header>
-        <a href="#" class="logo">Фут<span>БОЛЕН</span> запал<span>янко</span></a>
+<div class="navigation">
+    <h1 class="logo">
+        <a href="#">Фут<span>БОЛЕН</span> запал<span>янко</span></a>
+    </h1>
 
-        <nav>
-            <ul>
-                <li><a href="frontpage.html">Home</a></li>
-                <li><a href="#">Teams</a></li>
-                <li><a href="#">Competitions</a></li>
+    <nav class="nav-sidebar">
+        <ul>
+            <li><a href="#">Competitions</a>
+                <ul>
+                    <li><a href="#">First Division</a></li>
+                    <li><a href="#">Second Division</a></li>
+                    <li><a href="#">Cup</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Teams</a></li>
 
-            </ul>
-        </nav>
-    </header>
-    <section class = "hero">
-        <h1></h1>
-
-    </section>
-
+        </ul>
+    </nav>
 </div>
 <h2>Home:  <img src="{{ home_badge }}" alt="">  {{ home }} </h2>
 <h2>Away:  <img src="{{ away_badge }}" alt="">  {{ away }} </h2>
-<h2 class="match-time">{{ weekday }}</h2>
+<h2 class="match-date">{{ weekday }}</h2>
 <h2 class="match-time">{{ game_time }}</h2>
 <h3>location: {{ location }}, Bulgaria</h3>
 <h3>Driving time to location: {{ distance }}</h3>
