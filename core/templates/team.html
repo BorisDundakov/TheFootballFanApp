@@ -5,21 +5,49 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/team.css' %}">
     <title>{{ team_name }}</title>
-    # stadium to appear as background
-
+    {#    # stadium to appear as background#}
 
 </head>
 <body>
+
+<div class="navigation">
+    <h1 class="logo">
+        <a href="http://127.0.0.1:8000/">Фут<span>БОЛЕН</span> запал<span>янко</span></a>
+    </h1>
+
+    <nav class="nav-sidebar">
+        <ul>
+            <li><a href="#">Competitions</a>
+                <ul>
+                    <li><a href="#">First Division</a></li>
+                    <li><a href="#">Second Division</a></li>
+                    <li><a href="#">Cup</a></li>
+                </ul>
+            </li>
+            <li><a href="http://127.0.0.1:8000/">Home</a></li>
+            <li><a href="#">Teams</a></li>
+
+        </ul>
+    </nav>
+</div>
+
 <h1 class="team-name">{{ team_name }}</h1>
 
-<p>Next Fixture: <img src="{{ home_badge }}" alt=""> {{ home }} vs <img src="{{ away_badge }}" alt=""> {{ away }}</p>
+<p>Next fixture:</p>
+<ul>
+    <li><img src="{{ home_badge }}" style="vertical-align:middle" alt=""> {{ home }}</li>
+    <li><img src="{{ away_badge }}" style="vertical-align:middle" alt=""> {{ away }}</li>
+</ul>
 
 
-<p>Previous Fixture:     {% for key,value in last_3_matches.0.items %}
-    {{ key }} - {{ value }}
-
-{% endfor %}
-</p>
+<p>Previous Fixture:</p>
+<ul>
+    {% for key,value in last_3_matches.0.items %}
+        <li>{{ key }} - {{ value }}</li>
+        <li><img src="{{ previous_home_badge }}" alt=""></li>
+        <li><img src="{{ previous_away_badge }}" alt=""></li>
+    {% endfor %}
+</ul>
 <p>Last 3 games:
     <br><br>
     {% for ind_match in last_3_matches %}

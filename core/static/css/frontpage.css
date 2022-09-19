@@ -4,7 +4,7 @@ body {
     overflow: hidden;
 }
 
-h1 {
+.h1 {
     color: white;
     text-align: left;
 }
@@ -42,7 +42,6 @@ h1 {
     /*background-color: green;*/
     display: flex;
     align-items: center;
-
 
 }
 

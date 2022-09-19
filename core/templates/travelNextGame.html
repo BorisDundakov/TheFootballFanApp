@@ -21,14 +21,14 @@
                     <li><a href="#">Cup</a></li>
                 </ul>
             </li>
-            <li><a href="#">Home</a></li>
+            <li><a href="http://127.0.0.1:8000/">Home</a></li>
             <li><a href="#">Teams</a></li>
 
         </ul>
     </nav>
 </div>
-<h2>Home:  <img src="{{ home_badge }}" alt="">  {{ home }} </h2>
-<h2>Away:  <img src="{{ away_badge }}" alt="">  {{ away }} </h2>
+<h2>Home:  <img src="{{ home_badge }}" style="vertical-align:middle" alt="">  {{ home }} </h2>
+<h2>Away:  <img src="{{ away_badge }}" style="vertical-align:middle" alt="">  {{ away }} </h2>
 <h2 class="match-date">{{ weekday }}</h2>
 <h2 class="match-time">{{ game_time }}</h2>
 <h3>location: {{ location }}, Bulgaria</h3>

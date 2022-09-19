@@ -102,6 +102,25 @@ def export_next_fixture(team_name, team_number):
     return result
 
 
+def export_last_game_badges(team_name, team_number):
+    team = team_name.lower()
+    team = team.replace(" ", "-")
+    url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+
+    badges = {}
+    last_game_badges = soup.find('div', class_='Rj', id="undefined__home-team-badge")
+
+    for el in last_game_badges:
+        x = el.find_all_next("img")
+        badges["home"] = x[2]['src']
+        badges["away"] = x[5]['src']
+        break
+
+    return badges
+
+
 def export_last_3_results(team_name, team_number):
     team = team_name.lower()
     team = team.replace(" ", "-")
@@ -115,6 +134,8 @@ def export_last_3_results(team_name, team_number):
     scraped_away_team_names = soup.find_all('div', class_='Ij', id="undefined__away-team-name")
     scraped_home_team_goals = soup.find_all('div', class_='Nj')
     scraped_away_team_goals = soup.find_all('div', class_='Oj')
+    scraped_last_home_team = soup.find('div', class_='Ij', id="undefined__home-team-badge")
+    scraped_last_away_team = soup.find('div', class_='Ij', id="undefined__away-team-badge")
 
     home_team_names = []
     for home_team in scraped_home_team_names:

@@ -1,22 +1,96 @@
-body{
+body {
     background-color: green;
+    display: grid;
+    overflow: hidden;
+}
+
+.team-name {
 
 }
 
-.team-name{
-
-}
-
-.p{
+.p {
     /*you need to somehow include images in here (small logo images)*/
 }
 
 
-.button{
+.button {
     color: orange;
     font-family: Century, serif;
 }
 
-.button:hover{
+.button:hover {
     color: darkorange;
+}
+
+.logo {
+    color: #f3f3f3;
+    font-size: 25px;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+.nav-sidebar {
+    color: white;
+    float: right;
+    padding: 10px;
+    /*background-color: white;*/
+}
+
+.nav-sidebar ul {
+    padding: 10px;
+    float: right;
+    list-style: none;
+}
+
+.nav-sidebar ul li {
+    top: -90px;
+    padding: 20px;
+    float: right;
+    list-style: none;
+    /*background-color: blue;*/
+    position: relative;
+}
+
+.nav-sidebar ul li a {
+    text-decoration: none;
+    /*background-color: orangered;*/
+    display: block;
+}
+
+.nav-sidebar ul li ul {
+    position: absolute;
+    display: none;
+
+
+}
+
+.nav-sidebar ul li:hover ul {
+    display: block;
+
+}
+
+.nav-sidebar ul li ul li {
+
+    width: 220px;
+    /*background-color: wheat;*/
+}
+
+.nav-sidebar ul li ul li a {
+    top: 115px;
+    right: 175px;
+    position: absolute;
+    min-width: 110px;
+}
+
+
+.nav-sidebar ul li ul li a:hover {
+    background-color: #f3f3f3;
+
+}
+
+.team-name {
+    margin-top: -100px;
+}
+
+ul {
+    list-style-type: none;
 }

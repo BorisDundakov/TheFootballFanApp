@@ -6,6 +6,7 @@ from core.teams.BulgarianLeague import export_team_location
 from core.teams.BulgarianLeague import load_bing_maps
 from core.teams.BulgarianLeague import distance_to_stadium
 from core.teams.BulgarianLeague import export_matchday_results
+from core.teams.BulgarianLeague import export_last_game_badges
 
 
 # Create your views here.
@@ -53,6 +54,12 @@ def team(request):
     context['last_3_matches'] = last_3_matches
     # TODO: Fix Team location so that it shows the actual address of the stadium
     context['team_location'] = team_location
+
+    badges = export_last_game_badges(team_name, team_number)
+
+    context['previous_home_badge'] = badges['home']
+    context['previous_away_badge'] = badges['away']
+
     return render(request, 'team.html', context)
 
 
@@ -84,7 +91,6 @@ def travel_next_game(request):
 
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
-
 
     distance = 0
     current_location = ''
