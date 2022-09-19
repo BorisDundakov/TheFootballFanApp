@@ -57,6 +57,11 @@ def team(request):
 
     badges = export_last_game_badges(team_name, team_number)
 
+    if next_match['home'] == team_name:
+        context['team_logo'] = next_match['home_badge']
+    else:
+        context['team_logo'] = next_match['away_badge']
+
     context['previous_home_badge'] = badges['home']
     context['previous_away_badge'] = badges['away']
 
@@ -91,9 +96,6 @@ def travel_next_game(request):
 
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
-
-    distance = 0
-    current_location = ''
 
     # gmaps = googlemaps.Client()
     # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')

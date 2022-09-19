@@ -27,10 +27,12 @@
         </ul>
     </nav>
 </div>
-<h2>Home:  <img src="{{ home_badge }}" style="vertical-align:middle" alt="">  {{ home }} </h2>
-<h2>Away:  <img src="{{ away_badge }}" style="vertical-align:middle" alt="">  {{ away }} </h2>
-<h2 class="match-date">{{ weekday }}</h2>
-<h2 class="match-time">{{ game_time }}</h2>
+<h2>Home: <img src="{{ home_badge }}" style="vertical-align:middle" alt=""> {{ home }} </h2>
+<h2>Away: <img src="{{ away_badge }}" style="vertical-align:middle" alt=""> {{ away }} </h2>
+<div class="match-time">
+    <h2>{{ weekday }}</h2>
+    <h2>{{ game_time }}</h2>
+</div>
 <h3>location: {{ location }}, Bulgaria</h3>
 <h3>Driving time to location: {{ distance }}</h3>
 

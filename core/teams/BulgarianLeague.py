@@ -243,7 +243,8 @@ def distance_to_stadium(bing_address):
     driver.get(bing_address)
 
     # ACCEPTING COOKIES
-    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    # TIMER WAIT OF 1 SECOND NOT ENOUGH??
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
 
     stadium_coordinates = None
     while stadium_coordinates is None:

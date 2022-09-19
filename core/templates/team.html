@@ -31,25 +31,32 @@
     </nav>
 </div>
 
-<h1 class="team-name">{{ team_name }}</h1>
+<h1 class="team-name"><img src="{{ team_logo }}" style="vertical-align:middle" alt=""> {{ team_name }}</h1>
 
-<p>Next fixture:</p>
+
+<h2>Next fixture:</h2>
 <ul>
     <li><img src="{{ home_badge }}" style="vertical-align:middle" alt=""> {{ home }}</li>
     <li><img src="{{ away_badge }}" style="vertical-align:middle" alt=""> {{ away }}</li>
 </ul>
 
 
-<p>Previous Fixture:</p>
+<h2>Previous Fixture:</h2>
 <ul>
     {% for key,value in last_3_matches.0.items %}
-        <li>{{ key }} - {{ value }}</li>
-        <li><img src="{{ previous_home_badge }}" alt=""></li>
-        <li><img src="{{ previous_away_badge }}" alt=""></li>
+        {% if forloop.first %}
+            <li><img src="{{ previous_home_badge }}" alt="" style="vertical-align:middle"> {{ key }} {{ value }}</li>
+
+        {% else %}
+            <li><img src="{{ previous_away_badge }}" alt="" style="vertical-align:middle"> {{ key }} {{ value }}</li>
+
+        {% endif %}
+
     {% endfor %}
 </ul>
-<p>Last 3 games:
-    <br><br>
+<div class="last-3-games">
+    <h2>Last 3 games: </h2>
+
     {% for ind_match in last_3_matches %}
         {% for key,value in ind_match.items %}
             {{ key }} - {{ value }}
@@ -59,6 +66,8 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
+
+</div>
 
 <p>Stadium location: {{ team_location }}, Bulgaria </p>
 

@@ -8,16 +8,10 @@ body {
 .match-time {
     color: white;
     text-align: left;
+    line-height:2.8;
     float: right;
-    padding: 20px;
-
-}
-
-.match-date {
-    color: white;
-    float:right;
-    /*padding: 10px;*/
-
+    padding-left: 50%;
+    margin-top: -188px;
 }
 
 .nav-sidebar {

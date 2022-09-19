@@ -4,16 +4,18 @@ body {
     overflow: hidden;
 }
 
-.team-name {
-
-}
-
 .p {
     /*you need to somehow include images in here (small logo images)*/
 }
 
+.last-3-games{
+    float: right;
+    padding-left: 50%;
+    margin-top: -300px;
+}
 
 .button {
+    float: right;
     color: orange;
     font-family: Century, serif;
 }
