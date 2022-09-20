@@ -134,8 +134,6 @@ def export_last_3_results(team_name, team_number):
     scraped_away_team_names = soup.find_all('div', class_='Ij', id="undefined__away-team-name")
     scraped_home_team_goals = soup.find_all('div', class_='Nj')
     scraped_away_team_goals = soup.find_all('div', class_='Oj')
-    scraped_last_home_team = soup.find('div', class_='Ij', id="undefined__home-team-badge")
-    scraped_last_away_team = soup.find('div', class_='Ij', id="undefined__away-team-badge")
 
     home_team_names = []
     for home_team in scraped_home_team_names:
@@ -244,7 +242,7 @@ def distance_to_stadium(bing_address):
 
     # ACCEPTING COOKIES
     # TIMER WAIT OF 1 SECOND NOT ENOUGH??
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
 
     stadium_coordinates = None
     while stadium_coordinates is None:

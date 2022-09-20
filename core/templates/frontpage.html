@@ -43,9 +43,11 @@
                 {% for team,goals in match_details.items %}
                     {% if forloop.parentloop.revcounter|divisibleby:2 %}
                         <br>
-                        {{ team }} {{ goals }} :
+                    <p class="home-team">{{ team }}</p>
+                    <p class="home-goals">{{ goals }}</p>
                     {% else %}
-                        {{ team }} {{ goals }}
+                        <p class="away-team">{{ team }}</p>
+                        <p class="away-goals">{{ goals }}</p>
                     {% endif %}
 
                 {% endfor %}

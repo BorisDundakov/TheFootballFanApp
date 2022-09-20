@@ -4,7 +4,7 @@ body {
     overflow: hidden;
 }
 
-.h1 {
+h1 {
     color: white;
     text-align: left;
 }
@@ -24,7 +24,43 @@ body {
 
 .gameweek-results {
     font-style: oblique;
+    text-align: center;
+
 }
+
+.latest_results {
+    display: grid;
+    overflow: hidden;
+}
+
+h2.gameweek-results {
+    text-align: center;
+
+}
+
+.home-team {
+    margin-top: -20px;
+    margin-left: -350px;
+    /*width: 30%;*/
+}
+
+.away-team {
+    margin-right: -350px;
+    margin-top: -35px;
+    /*width: 30%;*/
+}
+
+.home-goals {
+    margin-top: -35px;
+    margin-left: -40px;
+    /*width: 30%;*/
+}
+
+.away-goals {
+    margin-top: -35px;
+    margin-right: -20px;
+}
+
 
 .latest_results {
     /* ':' must be centered */
@@ -42,6 +78,7 @@ body {
     /*background-color: green;*/
     display: flex;
     align-items: center;
+
 
 }
 
