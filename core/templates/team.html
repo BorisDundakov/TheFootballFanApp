@@ -35,20 +35,23 @@
 
 
 <h2>Next fixture:</h2>
-<ul>
-    <li><img src="{{ home_badge }}" style="vertical-align:middle" alt=""> {{ home }}</li>
-    <li><img src="{{ away_badge }}" style="vertical-align:middle" alt=""> {{ away }}</li>
-</ul>
+
+<p class="next-home-badge"><img src="{{ home_badge }}" style="vertical-align:middle" alt=""></p>
+<p class="next-home-name">{{ home }}</p>
+<p class="next-away-name">{{ away }}</p>
+<p class="next-away-badge"><img src="{{ away_badge }}" style="vertical-align:middle" alt=""></p>
 
 
 <h2>Previous Fixture:</h2>
 <ul>
     {% for key,value in last_3_matches.0.items %}
         {% if forloop.first %}
-            <li><img src="{{ previous_home_badge }}" alt="" style="vertical-align:middle"> {{ key }} {{ value }}</li>
+            <li class="badges"><img src="{{ previous_home_badge }}" alt=""
+                                    style="vertical-align:middle"> {{ key }} {{ value }}</li>
 
         {% else %}
-            <li><img src="{{ previous_away_badge }}" alt="" style="vertical-align:middle"> {{ key }} {{ value }}</li>
+            <li class="badges"><img src="{{ previous_away_badge }}" alt=""
+                                    style="vertical-align:middle"> {{ key }} {{ value }}</li>
 
         {% endif %}
 
@@ -58,12 +61,17 @@
     <h2>Last 3 games: </h2>
 
     {% for ind_match in last_3_matches %}
-        {% for key,value in ind_match.items %}
-            {{ key }} - {{ value }}
+        {% for team,goals in ind_match.items %}
             {% if forloop.counter|divisibleby:2 %}
-                <br><br>
 
+                <p class="home-team">{{ team }}</p>
+                <p class="home-goals">{{ goals }}</p>
+            {% else %}
+                <p class="away-team">{{ team }}</p>
+                <p class="away-goals">{{ goals }}</p>
             {% endif %}
+
+
         {% endfor %}
     {% endfor %}
 

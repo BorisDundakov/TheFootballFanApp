@@ -8,20 +8,23 @@ body {
     /*you need to somehow include images in here (small logo images)*/
 }
 
-.last-3-games{
+.last-3-games {
     float: right;
     padding-left: 50%;
-    margin-top: -300px;
+    margin-top: -440px;
+    display: grid;
+    overflow: hidden;
 }
 
-.button {
-    float: right;
-    color: orange;
+button {
+    background-color: darkorange;
+    float: left;
     font-family: Century, serif;
+    color: #f3f3f3;
 }
 
-.button:hover {
-    color: darkorange;
+button:hover {
+    color: lightyellow;
 }
 
 .logo {
@@ -95,4 +98,63 @@ body {
 
 ul {
     list-style-type: none;
+
+}
+
+.badges {
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.next-home-name {
+    margin-left: 100px;
+    margin-top: -60px;
+}
+
+.next-home-badge{
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.next-away-badge{
+    margin-top: -50px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+
+.next-away-name {
+    margin-left: 100px;
+
+}
+
+h2{
+    margin-top: 0;
+}
+
+.home-team{
+    margin-top: -65px;
+    margin-left: 250px;
+}
+
+.away-team{
+    margin-top: 30px;
+    margin-left: 40px;
+    /*margin-left: 80px;*/
+}
+
+.home-goals{
+    width: 2px;
+    margin-left: 220px;
+    margin-top: -80px;
+}
+
+.away-goals{
+    width: 2px;
+    margin-top: -49px;
+    margin-left: 200px;
+}
+
+h2.last-3-games{
+    margin-right: 30px;
 }
