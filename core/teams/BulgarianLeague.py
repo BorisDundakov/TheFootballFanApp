@@ -89,9 +89,8 @@ def export_next_fixture(team_name, team_number):
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(url)
 
-    stadium_coordinates = driver.find_element_by_class_name("ji")
-    a = stadium_coordinates.text
-    game_details = list(a.split("\n"))
+    stadium_coordinates = driver.find_element_by_class_name("ji").text
+    game_details = list(stadium_coordinates.split("\n"))
 
     game_time = game_details[1]
     game_date = game_details[2]
@@ -176,13 +175,13 @@ def export_team_location(team_name):
 
     scraped_team_info = soup.find_all('td', class_='text team large-link')
 
-    for el in scraped_team_info:
-        scraped_team_url = el.contents[0].attrs['href']
-        scraped_team_name = el.contents[0].attrs['title']
-        # football_clubs.append({scraped_team_name: scraped_team_url})
-        football_clubs.append({scraped_team_url: scraped_team_name})
-
     teams = export_team_names()
+
+    for el in scraped_team_info:
+        while len(football_clubs) < len(teams):
+            scraped_team_url = el.contents[0].attrs['href']
+            scraped_team_name = el.contents[0].attrs['title']
+            football_clubs.append({scraped_team_url: scraped_team_name})
 
     replace_team_names = []
 
@@ -190,9 +189,6 @@ def export_team_location(team_name):
         replace_team_names.append(t_name)
 
     counter = 0
-
-    while len(football_clubs) > len(replace_team_names):
-        football_clubs.pop()
 
     for team in range(len(football_clubs)):
         for key, value in football_clubs[team].items():
