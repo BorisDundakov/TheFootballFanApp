@@ -16,6 +16,14 @@ body {
     overflow: hidden;
 }
 
+.last-3-games h2{
+    margin-left: 70px;
+}
+
+.last-3-games p{
+
+}
+
 button {
     background-color: darkorange;
     float: left;
@@ -101,16 +109,16 @@ ul {
 
 }
 
-.badges {
-    padding-bottom: 10px;
-    padding-left: 10px;
-}
 
 .next-home-name {
     margin-left: 100px;
     margin-top: -60px;
 }
 
+.next-away-name {
+    margin-left: 100px;
+
+}
 .next-home-badge{
     padding-bottom: 10px;
     padding-left: 10px;
@@ -122,10 +130,33 @@ ul {
     padding-bottom: 5px;
 }
 
+.previous-fixture{
+    overflow: hidden;
+    display: grid;
+}
 
-.next-away-name {
+.previous-home-name {
     margin-left: 100px;
+    margin-top: -60px;
+}
 
+.previous-home-goals {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 240px;
+    margin-top: -60px;
+}
+
+.previous-away-name {
+    margin-left: 100px;
+    margin-top: -60px;
+}
+
+.previous-away-goals {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 240px;
+    margin-top: -60px;
 }
 
 h2{
@@ -155,6 +186,7 @@ h2{
     margin-left: 200px;
 }
 
-h2.last-3-games{
-    margin-right: 30px;
+
+.stadium-location{
+    font-size: 18px;
 }

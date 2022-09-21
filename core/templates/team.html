@@ -41,22 +41,28 @@
 <p class="next-away-name">{{ away }}</p>
 <p class="next-away-badge"><img src="{{ away_badge }}" style="vertical-align:middle" alt=""></p>
 
+<div class="previous-fixture">
+    <h2>Previous Fixture:</h2>
 
-<h2>Previous Fixture:</h2>
-<ul>
-    {% for key,value in last_3_matches.0.items %}
+    {% for team,goals in last_3_matches.0.items %}
         {% if forloop.first %}
-            <li class="badges"><img src="{{ previous_home_badge }}" alt=""
-                                    style="vertical-align:middle"> {{ key }} {{ value }}</li>
+            <p class="badges"><img src="{{ previous_home_badge }}" alt=""
+                                   style="vertical-align:middle"></p>
+            <p class="previous-home-name"> {{ team }}</p>
+            <p class="previous-home-goals"> {{ goals }}</p>
 
         {% else %}
-            <li class="badges"><img src="{{ previous_away_badge }}" alt=""
-                                    style="vertical-align:middle"> {{ key }} {{ value }}</li>
+            <p class="badges"><img src="{{ previous_away_badge }}" alt=""
+                                   style="vertical-align:middle"></p>
+
+            <p class="previous-away-name">{{ team }}</p>
+            <p class="previous-away-goals">{{ goals }}</p>
 
         {% endif %}
 
     {% endfor %}
-</ul>
+
+</div>
 <div class="last-3-games">
     <h2>Last 3 games: </h2>
 
@@ -77,7 +83,7 @@
 
 </div>
 
-<p>Stadium location: {{ team_location }}, Bulgaria </p>
+<p class="stadium-location">Stadium location: {{ team_location }}, Bulgaria </p>
 
 <div class="button">
     <form action="{% url 'travel_next_game' %}" method="post" id="travelNextGameFRM">
