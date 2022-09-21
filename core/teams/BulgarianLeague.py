@@ -212,7 +212,20 @@ def export_team_location(team_name):
     soup = BeautifulSoup(page.content, 'html.parser')
     team = soup.find_all('dd')
 
-    unedited_location = team[1].text
+    if team[0].text.isdigit():
+        unedited_location = team[1].text
+        first_edit_location = unedited_location.replace("\n ", "")
+        second_edit_location = first_edit_location.replace("  ", "")
+        third_edit_loaction = second_edit_location.strip()
+
+        if third_edit_loaction == 'Sofia':
+            if team_name == 'CSKA 1948':
+                unedited_location = 'Stadion Bistritsa, 1 ulitsa Sportist, Pancharevo, Bulgaria'
+            else:
+                unedited_location = 'Stadion Vasil Levski, Sredets, Bulgaria'
+    else:
+        unedited_location = team[0].text
+
     first_edit_location = unedited_location.replace("\n ", "")
     second_edit_location = first_edit_location.replace("  ", "")
 
@@ -242,7 +255,7 @@ def distance_to_stadium(bing_address):
 
     # ACCEPTING COOKIES
     # TIMER WAIT OF 1 SECOND NOT ENOUGH??
-    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
 
     stadium_coordinates = None
     while stadium_coordinates is None:
