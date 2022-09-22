@@ -10,17 +10,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# TODO: Put these addresses into constants file and reference them from there
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
 
 
 def export_team_names():
-    url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
-
+    URL = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
     football_clubs = {}
-
-    response = requests.get(url)
-    # soup = BeautifulSoup(page.content, 'html.parser')
+    response = requests.get(URL)
     json_file = (response.json())
     teams = (json_file['Stages'][0]['LeagueTable']['L'][0]['Tables'][0]['team'])
 
@@ -34,12 +32,12 @@ def export_team_names():
 
 
 def export_matchday_results():
-    league_url = "https://www.flashscore.com/football/bulgaria/parva-liga/"
+    LEAGUE_URL = "https://www.flashscore.com/football/bulgaria/parva-liga/"
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)
-    driver.get(league_url)
+    driver.get(LEAGUE_URL)
 
     # ACCEPTING COOKIES
     WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))).click()
@@ -158,17 +156,18 @@ def export_last_3_results(team_name, team_number):
 
 
 def export_team_location(team_name):
+    # TODO: Reduce function complexity (count of for loops)
     WEBSITE_URL = 'https://int.soccerway.com'
 
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
 
-    agent = {
+    AGENT = {
         "User-Agent": 'Mozilla/5.0'}
 
-    league_url = "https://int.soccerway.com/national/bulgaria/a-pfg/20222023/regular-season/r70062/"
-    page = requests.get(league_url, headers=agent)
+    LEAGUE_URL = "https://int.soccerway.com/national/bulgaria/a-pfg/20222023/regular-season/r70062/"
+    page = requests.get(LEAGUE_URL, headers=AGENT)
     soup = BeautifulSoup(page.content, 'html.parser')
 
     football_clubs = []
@@ -184,49 +183,46 @@ def export_team_location(team_name):
         if len(football_clubs) == len(teams):
             break
 
+    # TODO: LINE 189-191 MAY BE REDUNDANT, RE-ADJUSTMENT BELOW NEEDED --> export_team_names shouldn't be a dict!!!
     replace_team_names = []
 
     for t_name in teams.values():
         replace_team_names.append(t_name)
 
     counter = 0
-
+    desired_url = ""
     for team in range(len(football_clubs)):
         for key, value in football_clubs[team].items():
             football_clubs[team][key] = replace_team_names[counter]
             counter += 1
-
-    desired_url = ""
-    for team in range(len(football_clubs)):
-        for key, value in football_clubs[team].items():
-            if value == team_name:
+            if football_clubs[team][key] == team_name:
                 desired_url = WEBSITE_URL + key
                 break
         else:
             continue
         break
-    page = requests.get(desired_url, headers=agent)
+
+    page = requests.get(desired_url, headers=AGENT)
     soup = BeautifulSoup(page.content, 'html.parser')
     team = soup.find_all('dd')
 
     if team[0].text.isdigit():
         unedited_location = team[1].text
-        first_edit_location = unedited_location.replace("\n ", "")
-        second_edit_location = first_edit_location.replace("  ", "")
-        third_edit_loaction = second_edit_location.strip()
+        unedited_location = unedited_location.replace("\n ", "")
+        unedited_location = unedited_location.replace("  ", "")
+        unedited_location = unedited_location.strip()
 
-        if third_edit_loaction == 'Sofia':
+        if unedited_location == 'Sofia':
             if team_name == 'CSKA 1948':
                 unedited_location = 'Stadion Bistritsa, 1 ulitsa Sportist, Pancharevo, Bulgaria'
             else:
                 unedited_location = 'Stadion Vasil Levski, Sredets, Bulgaria'
     else:
         unedited_location = team[0].text
+        unedited_location = unedited_location.replace("\n ", "")
+        unedited_location = unedited_location.replace("  ", "")
 
-    first_edit_location = unedited_location.replace("\n ", "")
-    second_edit_location = first_edit_location.replace("  ", "")
-
-    location_info = second_edit_location
+    location_info = unedited_location
 
     return location_info
 

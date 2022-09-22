@@ -21,6 +21,7 @@ def team(request):
 
     correct_name = False
 
+    # TODO: Would it would be quicker with lambda function?
     for t in teams.values():
         if team_name in t:
             team_name = t
@@ -45,7 +46,6 @@ def team(request):
     context['home_badge'] = next_match['home_badge']
     context['away_badge'] = next_match['away_badge']
     context['last_3_matches'] = last_3_matches
-    # TODO: Fix Team location so that it shows the actual address of the stadium
     context['team_location'] = team_location
 
     badges = export_last_game_badges(team_name, team_number)
@@ -70,9 +70,12 @@ def travel_next_game(request):
     context['away'] = teams.split(',')[1]
 
     team_number = 0
-    for key, value in all_teams.items():
-        if value == context['home']:
-            team_number = key
+
+    # TODO: quicker sorting algorithm (quick sort?)
+
+    for current_team_number, current_team_name in all_teams.items():
+        if current_team_name == context['home']:
+            team_number = current_team_number
             break
 
     next_match = export_next_fixture(context['home'], team_number)
