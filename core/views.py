@@ -1,12 +1,5 @@
 from django.shortcuts import render
-from core.teams.BulgarianLeague import export_team_names
-from core.teams.BulgarianLeague import export_next_fixture
-from core.teams.BulgarianLeague import export_last_3_results
-from core.teams.BulgarianLeague import export_team_location
-from core.teams.BulgarianLeague import load_bing_maps
-from core.teams.BulgarianLeague import distance_to_stadium
-from core.teams.BulgarianLeague import export_matchday_results
-from core.teams.BulgarianLeague import export_last_game_badges
+from core.teams.BulgarianLeague import *
 
 
 # Create your views here.
@@ -96,9 +89,6 @@ def travel_next_game(request):
 
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
-
-    # gmaps = googlemaps.Client()
-    # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
     # TODO 0): think of program logistics
     # TODO 1): extract the stadium location of the home team --> web scraping

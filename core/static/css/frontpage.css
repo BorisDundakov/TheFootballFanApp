@@ -41,19 +41,16 @@ h2.gameweek-results {
 .home-team {
     margin-top: -20px;
     margin-left: -350px;
-    /*width: 30%;*/
 }
 
 .away-team {
     margin-right: -350px;
     margin-top: -35px;
-    /*width: 30%;*/
 }
 
 .home-goals {
     margin-top: -35px;
     margin-left: -40px;
-    /*width: 30%;*/
 }
 
 .away-goals {
@@ -63,8 +60,6 @@ h2.gameweek-results {
 
 
 .latest_results {
-    /* ':' must be centered */
-
     text-align: center;
     justify-content: space-evenly;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
@@ -75,7 +70,6 @@ h2.gameweek-results {
     width: 100%;
     height: 100%;
     justify-content: center;
-    /*background-color: green;*/
     display: flex;
     align-items: center;
 
@@ -109,7 +103,6 @@ form button {
     color: white;
     float: right;
     padding: 10px;
-    /*background-color: white;*/
 }
 
 .nav-sidebar ul {
@@ -123,32 +116,25 @@ form button {
     padding: 20px;
     float: right;
     list-style: none;
-    /*background-color: blue;*/
     position: relative;
 }
 
 .nav-sidebar ul li a {
     text-decoration: none;
-    /*background-color: orangered;*/
     display: block;
 }
 
 .nav-sidebar ul li ul {
     position: absolute;
     display: none;
-
-
 }
 
 .nav-sidebar ul li:hover ul {
     display: block;
-
 }
 
 .nav-sidebar ul li ul li {
-
     width: 220px;
-    /*background-color: wheat;*/
 }
 
 .nav-sidebar ul li ul li a {
@@ -161,7 +147,6 @@ form button {
 
 .nav-sidebar ul li ul li a:hover {
     background-color: #f3f3f3;
-
 }
 
 .teamsDropdown-content {

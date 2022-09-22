@@ -40,16 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.gis',
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DBFootballFanApp_Spatial',
-        'USER': 'postgres',
-        'PASSWORD': '133',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'DBFootballFanApp_Spatial',
+#         'USER': 'postgres',
+#         'PASSWORD': '133',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

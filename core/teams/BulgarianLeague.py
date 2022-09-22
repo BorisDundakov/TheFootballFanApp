@@ -178,10 +178,11 @@ def export_team_location(team_name):
     teams = export_team_names()
 
     for el in scraped_team_info:
-        while len(football_clubs) < len(teams):
-            scraped_team_url = el.contents[0].attrs['href']
-            scraped_team_name = el.contents[0].attrs['title']
-            football_clubs.append({scraped_team_url: scraped_team_name})
+        scraped_team_url = el.contents[0].attrs['href']
+        scraped_team_name = el.contents[0].attrs['title']
+        football_clubs.append({scraped_team_url: scraped_team_name})
+        if len(football_clubs) == len(teams):
+            break
 
     replace_team_names = []
 
@@ -243,7 +244,7 @@ def load_bing_maps(location_name):
 def distance_to_stadium(bing_address):
     # Using Selenium
 
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)

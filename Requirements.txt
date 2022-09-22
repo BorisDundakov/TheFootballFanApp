@@ -10,9 +10,7 @@ GEOS
 PROJ.4
 GeoIP
 numpy
-postgresql
 Chrome Webdriver
-Download Chrome Webdriver
 geopy~=2.2.0
 
 TIP!- use conda to install packages that fail to install with pip!

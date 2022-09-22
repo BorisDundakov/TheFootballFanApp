@@ -59,13 +59,11 @@ button:hover {
     padding: 20px;
     float: right;
     list-style: none;
-    /*background-color: blue;*/
     position: relative;
 }
 
 .nav-sidebar ul li a {
     text-decoration: none;
-    /*background-color: orangered;*/
     display: block;
 }
 
@@ -171,7 +169,6 @@ h2{
 .away-team{
     margin-top: 30px;
     margin-left: 40px;
-    /*margin-left: 80px;*/
 }
 
 .home-goals{
