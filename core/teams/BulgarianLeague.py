@@ -10,9 +10,36 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from concurrent.futures import ThreadPoolExecutor
+
 # TODO: Put these addresses into constants file and reference them from there
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
+
+
+def chromedriver_setup(url):
+    # TODO: This is very time consuming
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(PATH, options=op)
+    driver.get(url)
+
+
+def get_stadium_coordinates(driver):
+    start_time = time.time()
+
+    stadium_coordinates = None
+    while stadium_coordinates is None:
+        try:
+            stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+    end = time.time()
+
+    print("get_stadium_coordinates is :",
+          (end - start_time) * 10 ** 3, "ms")
+    return stadium_coordinates
 
 
 def export_team_names():
@@ -119,6 +146,8 @@ def export_last_game_badges(team_name, team_number):
 
 
 def export_last_3_results(team_name, team_number):
+    start = time.time()
+
     team = team_name.lower()
     team = team.replace(" ", "-")
 
@@ -152,11 +181,19 @@ def export_last_3_results(team_name, team_number):
         results.append({home_team_names[each_game]: home_team_goals[each_game],
                         away_team_names[each_game]: away_team_goals[each_game]})
 
+    end = time.time()
+
+    print("Export_last_3_results is :",
+          (end - start) * 10 ** 3, "ms")
+
     return results
 
 
 def export_team_location(team_name):
     # TODO: Reduce function complexity (count of for loops)
+
+    start = time.time()
+
     WEBSITE_URL = 'https://int.soccerway.com'
 
     ctx = ssl.create_default_context()
@@ -212,17 +249,23 @@ def export_team_location(team_name):
         unedited_location = unedited_location.replace("  ", "")
         unedited_location = unedited_location.strip()
 
-        if unedited_location == 'Sofia':
+        if unedited_location == 'Sofia' or unedited_location == 'Pazardzhik':
             if team_name == 'CSKA 1948':
                 unedited_location = 'Stadion Bistritsa, 1 ulitsa Sportist, Pancharevo, Bulgaria'
             else:
                 unedited_location = 'Stadion Vasil Levski, Sredets, Bulgaria'
+
     else:
         unedited_location = team[0].text
         unedited_location = unedited_location.replace("\n ", "")
         unedited_location = unedited_location.replace("  ", "")
 
     location_info = unedited_location
+
+    end = time.time()
+
+    print("Export_location is :",
+          (end - start) * 10 ** 3, "ms")
 
     return location_info
 
@@ -238,8 +281,9 @@ def load_bing_maps(location_name):
 
 
 def distance_to_stadium(bing_address):
-    # Using Selenium
+    start_time = time.time()
 
+    # Using Selenium
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
@@ -248,14 +292,19 @@ def distance_to_stadium(bing_address):
 
     # ACCEPTING COOKIES
     # TIMER WAIT OF 1 SECOND NOT ENOUGH??
-    WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
 
-    stadium_coordinates = None
-    while stadium_coordinates is None:
-        try:
-            stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
-        except selenium.common.exceptions.NoSuchElementException:
-            pass
+    WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    # 3 seconds --> 3000 miliseconds
+
+    # with ThreadPoolExecutor(max_workers=100) as p:
+    #     stadium_coordinates = None
+    #     while stadium_coordinates is None:
+    #         try:
+    #             stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
+    #         except selenium.common.exceptions.NoSuchElementException:
+    #             pass
+
+    stadium_coordinates = get_stadium_coordinates(driver)
 
     myloc = geocoder.ip('me')
     current_loc = myloc.latlng
@@ -291,5 +340,10 @@ def distance_to_stadium(bing_address):
         travel_time = f"{time_minutes.text} min"
     else:
         travel_time = f"{time_hours.text} h: {time_minutes.text} min"
+
+    end = time.time()
+
+    print("Distance_to_stadium_is is :",
+          (end - start_time) * 10 ** 3, "ms")
 
     return travel_time
