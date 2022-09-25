@@ -289,7 +289,7 @@ def distance_to_stadium(bing_address):
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
-    #op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
+    op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(bing_address)
 
@@ -316,9 +316,10 @@ def distance_to_stadium(bing_address):
 
     directions_btn = driver.find_element_by_class_name("directionsIcon")
     directions_btn.click()
-    time.sleep(2)
 
-    start = driver.find_element_by_css_selector(".start+ input")
+    start = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".start+ input")))
+
+    # start = driver.find_element_by_css_selector(".start+ input")
     end = driver.find_element_by_css_selector(".end+ input")
 
     from_loc = (', '.join(str(e) for e in current_loc))
