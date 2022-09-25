@@ -19,6 +19,7 @@ old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
 
 def chromedriver_setup(url):
     # TODO: This is very time consuming
+
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
@@ -63,6 +64,7 @@ def export_matchday_results():
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
+    op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(LEAGUE_URL)
 
@@ -287,6 +289,7 @@ def distance_to_stadium(bing_address):
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
+    #op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(bing_address)
 
@@ -329,6 +332,7 @@ def distance_to_stadium(bing_address):
 
     time_minutes = None
     time_hours = None
+
     while time_hours is None:
         try:
             time_hours = driver.find_element_by_class_name('drHours')

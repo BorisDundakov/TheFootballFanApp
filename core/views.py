@@ -63,7 +63,11 @@ def team(request):
 
 def travel_next_game(request):
     context = {}
-    teams = request.POST.get('team_name')
+    teams = request.POST.get('teams')
+
+    selected_team = request.POST.get('team_name')
+    selected_stadium = request.POST.get('team_location')
+
     all_teams = export_team_names()
 
     context['home'] = teams.split(',')[0]
@@ -84,10 +88,13 @@ def travel_next_game(request):
     context['weekday'] = next_match['weekday']
     context['game_time'] = next_match['game_time']
 
-    next_location = export_team_location(context['home'])
-    context['location'] = next_location
+    if context['home'] == selected_team:
+        context['location'] = selected_stadium
+    else:
+        team_location = export_team_location(context['home'])
+        context['location'] = team_location
 
-    bing_maps_link = load_bing_maps(next_location)
+    bing_maps_link = load_bing_maps(selected_stadium)
     context['maps'] = bing_maps_link
 
     distance = distance_to_stadium(bing_maps_link)
