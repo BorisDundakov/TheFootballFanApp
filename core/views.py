@@ -22,21 +22,20 @@ def team(request):
     correct_name = False
 
     # TODO: Would it would be quicker with lambda function?
-    for t in teams.values():
-        if team_name in t:
-            team_name = t
-            context['team_name'] = t
+
+    team_number = 0
+    for number, name in teams.items():
+        if team_name in name:
+            team_name = name
+            context['team_name'] = team_name
+            team_number = number
             correct_name = True
             break
 
     if not correct_name:
         return render(request, 'frontpage.html')
 
-    team_number = 0
-    for key, value in teams.items():
-        if value == team_name:
-            team_number = key
-            break
+    # TODO: Remove this for loop, I don't think it is neccessary
 
     next_match = export_next_fixture(team_name, team_number)
     last_3_matches = export_last_3_results(team_name, team_number)
