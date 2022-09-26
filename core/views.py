@@ -45,6 +45,9 @@ def team(request):
     context['away'] = next_match['away']
     context['home_badge'] = next_match['home_badge']
     context['away_badge'] = next_match['away_badge']
+    context['weekday'] = next_match['weekday']
+    context['game_time'] = next_match['game_time']
+
     context['last_3_matches'] = last_3_matches
     context['team_location'] = team_location
 
@@ -68,25 +71,15 @@ def travel_next_game(request):
     selected_team = request.POST.get('team_name')
     selected_stadium = request.POST.get('team_location')
 
-    all_teams = export_team_names()
+    context['home_badge'] = request.POST.get('home_badge')
+    context['away_badge'] = request.POST.get('away_badge')
+    context['weekday'] = request.POST.get('weekday')
+    context['game_time'] = request.POST.get('game_time')
 
     context['home'] = teams.split(',')[0]
     context['away'] = teams.split(',')[1]
 
-    team_number = 0
-
     # TODO: quicker sorting algorithm (quick sort?)
-
-    for current_team_number, current_team_name in all_teams.items():
-        if current_team_name == context['home']:
-            team_number = current_team_number
-            break
-
-    next_match = export_next_fixture(context['home'], team_number)
-    context['home_badge'] = next_match['home_badge']
-    context['away_badge'] = next_match['away_badge']
-    context['weekday'] = next_match['weekday']
-    context['game_time'] = next_match['game_time']
 
     if context['home'] == selected_team:
         context['location'] = selected_stadium
@@ -94,7 +87,7 @@ def travel_next_game(request):
         team_location = export_team_location(context['home'])
         context['location'] = team_location
 
-    bing_maps_link = load_bing_maps(selected_stadium)
+    bing_maps_link = load_bing_maps(context['location'])
     context['maps'] = bing_maps_link
 
     distance = distance_to_stadium(bing_maps_link)

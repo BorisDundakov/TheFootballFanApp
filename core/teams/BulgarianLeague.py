@@ -31,6 +31,11 @@ def get_stadium_coordinates(driver):
     start_time = time.time()
 
     stadium_coordinates = None
+    # STUCK IN AN ENDLESS LOOP (Septemvri Sofia)
+
+    if driver.title == 'Stadion Vasil Levski, Sredets, Bulgaria - Bing Карти':
+        stadium_coordinates = '42.687562, 23.335261'
+
     while stadium_coordinates is None:
         try:
             stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
@@ -296,7 +301,7 @@ def distance_to_stadium(bing_address):
     # ACCEPTING COOKIES
     # TIMER WAIT OF 1 SECOND NOT ENOUGH??
 
-    WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
     # 3 seconds --> 3000 miliseconds
 
     # with ThreadPoolExecutor(max_workers=100) as p:
@@ -314,10 +319,12 @@ def distance_to_stadium(bing_address):
     maps_time_address = "https://www.bing.com/maps/"
     driver.get(maps_time_address)
 
-    directions_btn = driver.find_element_by_class_name("directionsIcon")
-    directions_btn.click()
+    button = driver.find_element_by_css_selector(".directionsIcon")
+    driver.execute_script("arguments[0].click();", button)
 
-    start = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".start+ input")))
+    # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".directionsIcon"))).click()
+
+    start = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".start+ input")))
 
     # start = driver.find_element_by_css_selector(".start+ input")
     end = driver.find_element_by_css_selector(".end+ input")
