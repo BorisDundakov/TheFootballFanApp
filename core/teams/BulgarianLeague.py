@@ -13,7 +13,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 from threading import Thread
 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
 # TODO: Put these addresses into constants file and reference them from there
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
@@ -28,15 +28,10 @@ def chromedriver_setup(url):
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(url)
+    return driver
 
 
 def get_my_location():
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
-    driver = webdriver.Chrome(PATH, options=op)
-
     myloc = geocoder.ip('me')
     current_loc = myloc.latlng
     return current_loc
@@ -305,19 +300,14 @@ def load_bing_maps(location_name):
 def distance_to_stadium(bing_address):
     start_time = time.time()
 
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
-    driver = webdriver.Chrome(PATH, options=op)
-    driver.get(bing_address)
-
     current_loc = 0
+    # TODO: Make it with ProcessPoolExecutor ( would be quicker)
+
     with ThreadPoolExecutor(max_workers=10) as executor:
+        driver = executor.submit(chromedriver_setup, bing_address).result()
         current_loc = executor.submit(get_my_location)
 
     # Using Selenium
-
     # ACCEPTING COOKIES
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
     # 3 seconds --> 3000 miliseconds
