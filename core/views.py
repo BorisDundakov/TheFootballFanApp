@@ -33,9 +33,8 @@ def team(request):
             break
 
     if not correct_name:
-        return render(request, 'frontpage.html')
-
-    # TODO: Remove this for loop, I don't think it is neccessary
+        context['error'] = True
+        return render(request, 'frontpage.html', context)
 
     next_match = export_next_fixture(team_name, team_number)
     last_3_matches = export_last_3_results(team_name, team_number)

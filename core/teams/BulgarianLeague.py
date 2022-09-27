@@ -9,6 +9,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+
+from threading import Thread
 
 from concurrent.futures import ThreadPoolExecutor
 
@@ -25,6 +28,18 @@ def chromedriver_setup(url):
     op.add_argument('headless')
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(url)
+
+
+def get_my_location():
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
+    driver = webdriver.Chrome(PATH, options=op)
+
+    myloc = geocoder.ip('me')
+    current_loc = myloc.latlng
+    return current_loc
 
 
 def get_stadium_coordinates(driver):
@@ -290,7 +305,6 @@ def load_bing_maps(location_name):
 def distance_to_stadium(bing_address):
     start_time = time.time()
 
-    # Using Selenium
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE downloaded chromedriver.exe (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
@@ -298,49 +312,34 @@ def distance_to_stadium(bing_address):
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(bing_address)
 
-    # ACCEPTING COOKIES
-    # TIMER WAIT OF 1 SECOND NOT ENOUGH??
+    current_loc = 0
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        current_loc = executor.submit(get_my_location)
 
+    # Using Selenium
+
+    # ACCEPTING COOKIES
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
     # 3 seconds --> 3000 miliseconds
-
-    # with ThreadPoolExecutor(max_workers=100) as p:
-    #     stadium_coordinates = None
-    #     while stadium_coordinates is None:
-    #         try:
-    #             stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
-    #         except selenium.common.exceptions.NoSuchElementException:
-    #             pass
-
-    stadium_coordinates = get_stadium_coordinates(driver)
-
-    myloc = geocoder.ip('me')
-    current_loc = myloc.latlng
-    maps_time_address = "https://www.bing.com/maps/"
-    driver.get(maps_time_address)
 
     button = driver.find_element_by_css_selector(".directionsIcon")
     driver.execute_script("arguments[0].click();", button)
 
-    # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".directionsIcon"))).click()
+    start = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".start+ input")))
 
-    start = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".start+ input")))
+    x, y = current_loc.result()
+    from_loc = f"{str(x)}, {str(y)}"
 
-    # start = driver.find_element_by_css_selector(".start+ input")
-    end = driver.find_element_by_css_selector(".end+ input")
-
-    from_loc = (', '.join(str(e) for e in current_loc))
-    to_loc = stadium_coordinates
-
+    ActionChains(driver).move_to_element(start)
     start.send_keys(from_loc)
-    end.send_keys(to_loc)
+
+    # ActionChains(driver).move_to_element(end)
+    # end.send_keys(to_loc)
 
     go_btn = driver.find_element_by_class_name("dirBtnGo.commonButton")
     go_btn.click()
-
     time_minutes = None
     time_hours = None
-
     while time_hours is None:
         try:
             time_hours = driver.find_element_by_class_name('drHours')
@@ -355,7 +354,7 @@ def distance_to_stadium(bing_address):
 
     end = time.time()
 
-    print("Distance_to_stadium_is is :",
+    print("Distance_to_stadium is :",
           (end - start_time) * 10 ** 3, "ms")
 
     return travel_time
