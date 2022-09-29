@@ -1,9 +1,11 @@
 # TheFootballFanApp
 A passion project dedicated towards the average Bulgarian Football Fan, providing all neccesarry information for his favorite team. The website includes information about matches, travel tips and much more.
 
-## Installation
+## Virtual Environment Setup
 The following project was set up on a conda venv, due to some unexpected issues with pip, but the latter could also be used.
-A list with the required libraries for installation can be found in the Requirements.txt file.
+
+## Installing packages
+A list with the required libraries for installation can be found in the Requirements.txt file. Here, an example installation with one of the packages is shown
 This list is expected to grow with upcoming updates.
 
 ## Future plans
