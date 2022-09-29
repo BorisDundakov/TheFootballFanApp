@@ -1,6 +1,9 @@
 # TheFootballFanApp
 A passion project dedicated towards the average Bulgarian Football Fan, providing all neccesarry information for his favorite team. The website includes information about matches, travel tips and much more.
 
+## Current version runthrough
+-images, text with explanation written here
+
 ## Virtual Environment Setup
 The following project was set up on a conda venv, due to some unexpected issues with pip, but the latter could also be used.
 
@@ -26,7 +29,7 @@ You may need to pass in at least 1 starting package in your newly created venv.
 
 You can watch the following video as a reference guide(https://www.youtube.com/watch?v=YJC6ldI3hWk&t=406s&ab_channel=CoreySchafer). 
 
-## Installing packages
+### Installing packages
 A list with the required libraries for installation can be found in the Requirements.txt file. 
 This list is expected to grow with upcoming updates.
 Here, an example installation with one of the packages is shown:
@@ -46,3 +49,9 @@ To check if a package already exists in your virtual environment, type the follo
 - adding features and webpages
 - design improvements
 - implementation with the БДЖ website
+
+
+## Areas to improve upon
+- better UI design
+- quicker loading time
+- features implementation
