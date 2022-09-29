@@ -1,3 +1,6 @@
+import multiprocessing
+import queue
+
 from bs4 import BeautifulSoup
 import requests
 import ssl
@@ -11,51 +14,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from threading import Thread
-
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
 # TODO: Put these addresses into constants file and reference them from there
 new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
 old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
-
-
-def chromedriver_setup(url):
-    # TODO: This is very time consuming
-
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    driver = webdriver.Chrome(PATH, options=op)
-    driver.get(url)
-    return driver
-
-
-def get_my_location():
-    myloc = geocoder.ip('me')
-    current_loc = myloc.latlng
-    return current_loc
-
-
-def get_stadium_coordinates(driver):
-    start_time = time.time()
-
-    stadium_coordinates = None
-    # STUCK IN AN ENDLESS LOOP (Septemvri Sofia)
-
-    if driver.title == 'Stadion Vasil Levski, Sredets, Bulgaria - Bing Карти':
-        stadium_coordinates = '42.687562, 23.335261'
-
-    while stadium_coordinates is None:
-        try:
-            stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
-        except selenium.common.exceptions.NoSuchElementException:
-            pass
-    end = time.time()
-
-    print("get_stadium_coordinates is :",
-          (end - start_time) * 10 ** 3, "ms")
-    return stadium_coordinates
 
 
 def export_team_names():
@@ -237,7 +200,6 @@ def export_team_location(team_name):
         if len(football_clubs) == len(teams):
             break
 
-    # TODO: LINE 189-191 MAY BE REDUNDANT, RE-ADJUSTMENT BELOW NEEDED --> export_team_names shouldn't be a dict!!!
     replace_team_names = []
 
     for t_name in teams.values():
@@ -297,11 +259,47 @@ def load_bing_maps(location_name):
     return bing_address
 
 
+def get_my_location():
+    myloc = geocoder.ip('me')
+    current_loc = myloc.latlng
+    return current_loc
+
+
+def get_stadium_coordinates(driver):
+    start_time = time.time()
+    stadium_coordinates = None
+
+    if driver.title == 'Stadion Vasil Levski, Sredets, Bulgaria - Bing Карти':
+        stadium_coordinates = '42.687562, 23.335261'
+
+    while stadium_coordinates is None:
+        try:
+            stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+    end = time.time()
+
+    print("get_stadium_coordinates is :",
+          (end - start_time) * 10 ** 3, "ms")
+
+    return stadium_coordinates
+
+
+def chromedriver_setup(url):
+    # TODO: This is very time consuming
+
+    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(PATH, options=op)
+    driver.get(url)
+    return driver
+
+
 def distance_to_stadium(bing_address):
     start_time = time.time()
 
-    current_loc = 0
-    # TODO: Make it with ProcessPoolExecutor ( would be quicker)
+    # TODO: Try it with ProcessPoolExecutor (would it be quicker?)
 
     with ThreadPoolExecutor(max_workers=10) as executor:
         driver = executor.submit(chromedriver_setup, bing_address).result()
@@ -322,9 +320,6 @@ def distance_to_stadium(bing_address):
 
     ActionChains(driver).move_to_element(start)
     start.send_keys(from_loc)
-
-    # ActionChains(driver).move_to_element(end)
-    # end.send_keys(to_loc)
 
     go_btn = driver.find_element_by_class_name("dirBtnGo.commonButton")
     go_btn.click()

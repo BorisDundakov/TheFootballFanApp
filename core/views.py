@@ -91,6 +91,8 @@ def travel_next_game(request):
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
 
+    """"""
+
     # TODO 0): think of program logistics
     # TODO 1): extract the stadium location of the home team --> web scraping
     # TODO 2): get the current location of the user
