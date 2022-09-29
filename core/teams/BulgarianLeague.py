@@ -1,6 +1,3 @@
-import multiprocessing
-import queue
-
 from bs4 import BeautifulSoup
 import requests
 import ssl

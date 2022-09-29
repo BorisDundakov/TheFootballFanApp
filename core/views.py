@@ -91,17 +91,12 @@ def travel_next_game(request):
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
 
-    """"""
-
-    # TODO 0): think of program logistics
-    # TODO 1): extract the stadium location of the home team --> web scraping
-    # TODO 2): get the current location of the user
-    # TODO 3): calculate the distance between the 2 points
-    # TODO 4): locate the nearest train stops on БДЖ to the starting and end locations
+    # TODO FUTURE:
+    # TODO - integrate google maps instead of bing maps, bus alternatives,
+    #  fuel expenditure (go by car alternative price comparison)
+    # TODO 1): locate the nearest train stops on БДЖ to the starting and end locations
     # TODO 5): find a trip between the БДЖ stops
     # TODO 6): display a list of the possible trips as buttons --> starting date & time, end date & time, price
     # TODO 7): clicking the button would redirect you to the БДЖ website for buying the tickets
-    # TODO FUTURE:
-    # TODO - integrate google maps, bus alternatives, fuel expenditure (go by car alternative price comparison)
 
     return render(request, 'travelNextGame.html', context)
