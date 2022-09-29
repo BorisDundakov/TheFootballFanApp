@@ -11,7 +11,7 @@ If you choose to run this project with conda you can watch the following video t
 A list with the required libraries for installation can be found in the Requirements.txt file. 
 This list is expected to grow with upcoming updates.
 Here, an example installation with one of the packages is shown:
-![](conda_pck_instl_ex.PNG)
+(https://user-images.githubusercontent.com/71731579/193052408-47885794-e860-4102-99d6-0d0dd3cca490.PNG)
 
 
 ## Future plans
