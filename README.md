@@ -11,19 +11,7 @@ The current version of the project allows the user to check in with the latest r
 
 
 ## How the project is build
-This project is build by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made in future updates.
-
-
-## Main Sources of information
-As this is my first Django project built from scratch I went through a lot of articles, videos and StackOverflow questions. Here is a short list of some of the links that helped me out majorly during the project build up:
-- https://www.youtube.com/watch?v=Xjv1sY630Uc&t=4s&ab_channel=TechWithTim
-- https://www.digitalocean.com/community/tutorials/python-multiprocessing-example
-- https://www.youtube.com/watch?v=RvCBzhhydNk&t=925s&ab_channel=Pythonology
-- https://stackoverflow.com/questions/68749127/web-scraping-accept-cookies-selenium-python-airbnb
-- https://www.youtube.com/watch?v=gXLjWRteuWI&t=704s&ab_channel=DesignCourse
-- https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
-- https://www.w3schools.com/tags/att_input_type_hidden.asp
-
+This project is build by using 2 webscraping libraries - beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made in future updates.
 
 ## Websites from which data has been scraped
 - https://www.livescore.com/en/
