@@ -18,13 +18,10 @@ As this is my first Django project built from scratch I went through a lot of ar
 - https://www.w3schools.com/tags/att_input_type_hidden.asp
 
 ## Websites from which data has been scraped
-- livescore.com![livescore](https://user-images.githubusercontent.com/71731579/193228828-e49c5e8a-c243-47d4-88b1-c95c80d964fd.png)
-
-- flashscore.com![flashscore](https://user-images.githubusercontent.com/71731579/193228840-009f4cba-5253-44b9-a461-f9e436de43e1.png)
-
-- https://int.soccerway.com![soccerway](https://user-images.githubusercontent.com/71731579/193228850-30b00f05-bd39-46d8-9c9b-20127ccde60e.png)
-
-- https://www.bing.com/maps![bing_maps](https://user-images.githubusercontent.com/71731579/193228875-32b526b6-a470-4f60-82eb-4b913fbc3e79.png)
+- https://www.livescore.com/en/
+- https://www.flashscore.com/
+- https://int.soccerway.com
+- https://www.bing.com/maps
 
 
 ## Virtual Environment Setup
