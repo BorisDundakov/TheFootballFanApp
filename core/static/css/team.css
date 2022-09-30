@@ -11,7 +11,7 @@ body {
 .last-3-games {
     float: right;
     padding-left: 50%;
-    margin-top: -440px;
+    margin-top: -410px;
     display: grid;
     overflow: hidden;
 }
@@ -162,7 +162,7 @@ h2{
 }
 
 .home-team{
-    margin-top: -65px;
+    margin-top: -60px;
     margin-left: 250px;
 }
 
@@ -174,12 +174,12 @@ h2{
 .home-goals{
     width: 2px;
     margin-left: 220px;
-    margin-top: -80px;
+    margin-top: -73px;
 }
 
 .away-goals{
     width: 2px;
-    margin-top: -49px;
+    margin-top: -47px;
     margin-left: 200px;
 }
 
