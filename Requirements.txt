@@ -1,18 +1,18 @@
--Python GDAL [GDAL-3.4.2-cp37-cp37m-win32.whl]
--Django
--Python
--Internet connection
-requests~=2.27.1
-beautifulsoup4~=4.11.1
-Django~=3.2.5
-GDAL~=3.4.2
-GEOS
-PROJ.4
-GeoIP
-numpy
-Chrome Webdriver
-geopy~=2.2.0
+OSGEO library is very problematic on Windows10
 
-TIP!- use conda to install packages that fail to install with pip!
-geocoder~=1.38.1
+packages:
+Django~=3.2.5
+beautifulsoup4~=4.11.1
+requests
 selenium~=3.141.0
+geopy~=2.2.0
+geocoder~=1.38.1
+
+
+future pacakges:
+-Python GDAL [GDAL-3.4.2-cp37-cp37m-win32.whl]
+-GDAL~=3.4.2
+-GEOS
+-PROJ.4
+-GeoIP
+-Psycopg

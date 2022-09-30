@@ -71,14 +71,14 @@ def export_next_fixture(team_name, team_number):
     url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
-    team_names = soup.find_all('span', class_='li')
+    team_names = soup.find_all('span', class_='Th')
     for team_name in range(len(team_names)):
         if team_name == 0:
             result['home'] = team_names[team_name].text
         else:
             result['away'] = team_names[team_name].text
 
-    last_game_info = soup.find_all('div', class_='ji')
+    last_game_info = soup.find_all('div', class_='Rh')
 
     for el in last_game_info:
         badges = el.find_all_next("img")
@@ -91,11 +91,11 @@ def export_next_fixture(team_name, team_number):
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(url)
 
-    stadium_coordinates = driver.find_element_by_class_name("ji").text
-    game_details = list(stadium_coordinates.split("\n"))
+    match_info = driver.find_element_by_class_name("Yh").text
+    game_details = list(match_info.split("\n"))
 
-    game_time = game_details[1]
-    game_date = game_details[2]
+    game_time = game_details[0]
+    game_date = game_details[1]
 
     result['weekday'] = game_date
     result['game_time'] = game_time
@@ -111,12 +111,12 @@ def export_last_game_badges(team_name, team_number):
     soup = BeautifulSoup(page.content, 'html.parser')
 
     badges = {}
-    last_game_badges = soup.find('div', class_='Rj', id="undefined__home-team-badge")
+    last_game_badges = soup.find('div', class_='Rh')
 
     for el in last_game_badges:
         x = el.find_all_next("img")
-        badges["home"] = x[2]['src']
-        badges["away"] = x[5]['src']
+        badges["home"] = x[8]['src']
+        badges["away"] = x[11]['src']
         break
 
     return badges
@@ -133,10 +133,10 @@ def export_last_3_results(team_name, team_number):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    scraped_home_team_names = soup.find_all('div', class_='Ij', id="undefined__home-team-name")
-    scraped_away_team_names = soup.find_all('div', class_='Ij', id="undefined__away-team-name")
-    scraped_home_team_goals = soup.find_all('div', class_='Nj')
-    scraped_away_team_goals = soup.find_all('div', class_='Oj')
+    scraped_home_team_names = soup.find_all('div', class_='Rj', id="undefined__home-team-name")
+    scraped_away_team_names = soup.find_all('div', class_='Rj', id="undefined__away-team-name")
+    scraped_home_team_goals = soup.find_all('div', class_='Wj')
+    scraped_away_team_goals = soup.find_all('div', class_='Xj')
 
     home_team_names = []
     for home_team in scraped_home_team_names:
