@@ -13,6 +13,7 @@ The current version of the project allows the user to check in with the latest r
 ## How the project is build
 This project is build by using 2 webscraping libraries - beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made in future updates.
 
+
 ## Websites from which data has been scraped
 - https://www.livescore.com/en/
 - https://www.flashscore.com/
@@ -24,7 +25,6 @@ This project is build by using 2 webscraping libraries - beautifulsoup4 and sele
 The following project was set up on a conda venv, due to some unexpected issues with pip, but the latter could also be used.
 
 ### Installing conda
-Here is a brief installation guide:
 1) Download the anaconda version according to your Operating System (https://www.anaconda.com/products/distribution)
 2) Run through the anaconda installer
 3) Open the terminal and type in the following command to create a new virtual environment
@@ -40,6 +40,7 @@ You may need to pass in at least 1 starting package in your newly created venv.
 ![conda_act_env](https://user-images.githubusercontent.com/71731579/193265477-1d38116b-a332-4a9a-9936-a6b9629a11b6.PNG)
 
 You can watch the following video as a reference guide --> https://www.youtube.com/watch?v=YJC6ldI3hWk&t=406s&ab_channel=CoreySchafer 
+
 
 ### Installing packages
 A list with the required libraries for installation can be found in the Requirements.txt file. 
@@ -64,6 +65,7 @@ This is the command to install a package if you choose to use pip. To install an
 2) Navigate yourself to the About Chrome page and check in your current version
 3) Download the correct version of ChromeDriver from the link provided --> https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbEt3Z2Z4QVdja3N4VTFPT0tLNnBlY1c1el9Rd3xBQ3Jtc0trbW95NlhTbS1wOTYyR3dqNE9CaTYtUmNtbklSUE1wRmZPaF9pR2prd3hQN0FucEJkRk1YZndKWVg2X0xLTnlGeEkzTHZPVXN2Rm9GVHlzN3doMkZoQV9vN1ZaUE45a2YyV1hyc0hUS2ZOSnYtcy1aNA&q=https%3A%2F%2Fsites.google.com%2Fa%2Fchromium.org%2Fchromedriver%2Fdownloads&v=Xjv1sY630Uc
 4) Extract and copy the file to 'C:\Program Files (x86)\' and paste the chrome file there
+
 
 ## Future plans
 - bug fixes
