@@ -1,8 +1,31 @@
 # TheFootballFanApp
-A passion project dedicated towards the average Bulgarian Football Fan, providing all neccesarry information for his favorite team. The website includes information about matches, travel tips and much more.
+A passion project dedicated towards the Bulgarian Football Fan providing all neccesarry information about his favorite team. The website includes information about matches, travel tips and more.
 
 ## Current version runthrough
--images, text with explanation written here
+The current version of the project allows the user to check in with the latest results and gather information about the next fixture of his favorite team, including travel location and estimated travel time by car, which is adjusted according to expected traffic. Future versions of the project will compare prices with different alternatives (traveling by train using data from the БДЖ website), aiming to give the user the full picture of how you can best get to the next game. Currently the website interface is very plane and basic, but future updates will give it more of a modern look.
+
+## How the project was build
+This project is built by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources of information slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made on future updates.
+
+## Main Sources of information
+As this is my first Django project built from scratch I went through a lot of articles, videos and StackOverflow questions. Here is a short list of some of the links that helped me out majorly during the project build up:
+- https://www.youtube.com/watch?v=Xjv1sY630Uc&t=4s&ab_channel=TechWithTim
+- https://www.digitalocean.com/community/tutorials/python-multiprocessing-example
+- https://www.youtube.com/watch?v=RvCBzhhydNk&t=925s&ab_channel=Pythonology
+- https://stackoverflow.com/questions/68749127/web-scraping-accept-cookies-selenium-python-airbnb
+- https://www.youtube.com/watch?v=gXLjWRteuWI&t=704s&ab_channel=DesignCourse
+- https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
+- https://www.w3schools.com/tags/att_input_type_hidden.asp
+
+## Websites from which data has been scraped
+- livescore.com![livescore](https://user-images.githubusercontent.com/71731579/193228828-e49c5e8a-c243-47d4-88b1-c95c80d964fd.png)
+
+- flashscore.com![flashscore](https://user-images.githubusercontent.com/71731579/193228840-009f4cba-5253-44b9-a461-f9e436de43e1.png)
+
+- https://int.soccerway.com![soccerway](https://user-images.githubusercontent.com/71731579/193228850-30b00f05-bd39-46d8-9c9b-20127ccde60e.png)
+
+- https://www.bing.com/maps![bing_maps](https://user-images.githubusercontent.com/71731579/193228875-32b526b6-a470-4f60-82eb-4b913fbc3e79.png)
+
 
 ## Virtual Environment Setup
 The following project was set up on a conda venv, due to some unexpected issues with pip, but the latter could also be used.
@@ -42,6 +65,14 @@ To check if a package already exists in your virtual environment, type the follo
 
 ![conda_lst_pckg](https://user-images.githubusercontent.com/71731579/193062178-75be49af-4b78-410a-a02b-b3a8ac396c1d.PNG)
 
+This is the command to install any package if you choose to use pip
+![pip_install](https://user-images.githubusercontent.com/71731579/193228762-5819ccb7-3950-4af6-89a9-97ed57283973.PNG)
+
+## Chromedriver setup 
+1) Open Google Chrome WebBrowser
+2) Navigate yourself to the About Chrome page and check in your current version
+3) Download the correct version of ChromeDriver from the link provided (https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbEt3Z2Z4QVdja3N4VTFPT0tLNnBlY1c1el9Rd3xBQ3Jtc0trbW95NlhTbS1wOTYyR3dqNE9CaTYtUmNtbklSUE1wRmZPaF9pR2prd3hQN0FucEJkRk1YZndKWVg2X0xLTnlGeEkzTHZPVXN2Rm9GVHlzN3doMkZoQV9vN1ZaUE45a2YyV1hyc0hUS2ZOSnYtcy1aNA&q=https%3A%2F%2Fsites.google.com%2Fa%2Fchromium.org%2Fchromedriver%2Fdownloads&v=Xjv1sY630Uc)
+4) Extract and copy the file to 'C:\Program Files (x86)\' and paste the chrome file there
 
 ## Future plans
 - bug fixes
@@ -49,6 +80,7 @@ To check if a package already exists in your virtual environment, type the follo
 - adding features and webpages
 - design improvements
 - implementation with the БДЖ website
+- replace bing maps with google maps
 
 
 ## Areas to improve upon
