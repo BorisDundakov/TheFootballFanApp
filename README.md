@@ -79,13 +79,8 @@ This is the command to install any package if you choose to use pip
 ## Future plans
 - bug fixes
 - code optimization
+- reduce page loading time
 - adding features and webpages
 - design improvements
 - implementation with the БДЖ website
 - replace bing maps with google maps
-
-
-## Areas to improve upon
-- better UI design
-- quicker loading time
-- features implementation
