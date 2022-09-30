@@ -11,7 +11,7 @@ The current version of the project allows the user to check in with the latest r
 
 
 ## How the project is build
-This project is build by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made on future updates.
+This project is build by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made in future updates.
 
 
 ## Main Sources of information
