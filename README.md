@@ -4,6 +4,12 @@ A passion project dedicated towards the Bulgarian Football Fan providing all nec
 ## Current version runthrough
 The current version of the project allows the user to check in with the latest results and gather information about the next fixture of his favorite team, including travel location and estimated travel time by car, which is adjusted according to expected traffic. Future versions of the project will compare prices with different alternatives (traveling by train using data from the БДЖ website), aiming to give the user the full picture of how you can best get to the next game. Currently the website interface is very plane and basic, but future updates will give it more of a modern look.
 
+![HomePage](https://user-images.githubusercontent.com/71731579/193261077-7c1854fe-e440-48ae-ac99-20d3ff3718ec.PNG)
+![TeamPage](https://user-images.githubusercontent.com/71731579/193261098-cbaedcfd-e309-4e82-9b9d-9bb932d6b377.PNG)
+![TravelPage](https://user-images.githubusercontent.com/71731579/193261103-c5a2a9f6-7c1a-420b-be36-5cf890a8d214.PNG)
+
+
+
 ## How the project was build
 This project is built by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources of information slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made on future updates.
 
