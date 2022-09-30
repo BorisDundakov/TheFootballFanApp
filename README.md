@@ -1,6 +1,7 @@
 # TheFootballFanApp
 A passion project dedicated towards the Bulgarian Football Fan providing all neccesarry information about his favorite team. The website includes information about matches, travel tips and more.
 
+
 ## Current version runthrough
 The current version of the project allows the user to check in with the latest results and gather information about the next fixture of his favorite team, including travel location and estimated travel time by car, which is adjusted according to expected traffic. Future versions of the project will compare prices with different alternatives (traveling by train using data from the БДЖ website), aiming to give the user the full picture of how you can best get to the next game. Currently the website interface is very plane and basic, but future updates will give it more of a modern look.
 
@@ -9,9 +10,9 @@ The current version of the project allows the user to check in with the latest r
 ![TravelPage](https://user-images.githubusercontent.com/71731579/193261103-c5a2a9f6-7c1a-420b-be36-5cf890a8d214.PNG)
 
 
+## How the project is build
+This project is build by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made on future updates.
 
-## How the project was build
-This project is built by using 2 webscraping libraries- beautifulsoup4 and selenium. These libraries allow reliable data from different websites to be extracted. Unfortunately with webscraping, scraping large amounts of data from different sources of information slows the website down. For now the damage is combated with multiprocessing, but the website is still pretty slow for modern day standards. Further improvements will be made on future updates.
 
 ## Main Sources of information
 As this is my first Django project built from scratch I went through a lot of articles, videos and StackOverflow questions. Here is a short list of some of the links that helped me out majorly during the project build up:
@@ -22,6 +23,7 @@ As this is my first Django project built from scratch I went through a lot of ar
 - https://www.youtube.com/watch?v=gXLjWRteuWI&t=704s&ab_channel=DesignCourse
 - https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
 - https://www.w3schools.com/tags/att_input_type_hidden.asp
+
 
 ## Websites from which data has been scraped
 - https://www.livescore.com/en/
@@ -41,17 +43,13 @@ Here is a brief installation guide:
 
 ![conda_crt_venv](https://user-images.githubusercontent.com/71731579/193061314-ff8a9de5-1539-4e52-b888-42b7c5b625bd.PNG)
 
-
 You may need to pass in at least 1 starting package in your newly created venv.
 
 ![conda_crt_venv_2](https://user-images.githubusercontent.com/71731579/193061968-2710b61c-2b4d-4e6e-9f91-d7f1a51e5ac8.PNG)
 
-
 4) Afterwards you need to activate your new env with the following command
 
 ![conda_act_venv](https://user-images.githubusercontent.com/71731579/193062061-f3d0b302-e409-476b-8cd2-8ad37711109d.PNG)
-
-
 
 You can watch the following video as a reference guide(https://www.youtube.com/watch?v=YJC6ldI3hWk&t=406s&ab_channel=CoreySchafer). 
 
@@ -69,6 +67,7 @@ To check if a package already exists in your virtual environment, type the follo
 ![conda_lst_pckg](https://user-images.githubusercontent.com/71731579/193062178-75be49af-4b78-410a-a02b-b3a8ac396c1d.PNG)
 
 This is the command to install any package if you choose to use pip
+
 ![pip_install](https://user-images.githubusercontent.com/71731579/193228762-5819ccb7-3950-4af6-89a9-97ed57283973.PNG)
 
 ## Chromedriver setup 
