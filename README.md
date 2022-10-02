@@ -1,8 +1,5 @@
 # TheFootballFanApp
 
-![Website](https://img.shields.io/website) [https://img.shields.io/pypi/pyversions/Django ](https://img.shields.io/github/pipenv/locked/python-version/BorisDundakov/TheFootballFanApp)
-
-
 A passion project dedicated towards the Bulgarian Football Fan providing all neccesarry information about his favorite team. The website includes information about matches, travel tips and more.
 
 
