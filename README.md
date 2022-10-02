@@ -1,4 +1,5 @@
 # TheFootballFanApp
+![Website](https://img.shields.io/website)
 A passion project dedicated towards the Bulgarian Football Fan providing all neccesarry information about his favorite team. The website includes information about matches, travel tips and more.
 
 
