@@ -68,6 +68,7 @@ def travel_next_game(request):
 
     selected_team = request.POST.get('team_name')
     selected_stadium = request.POST.get('team_location')
+    context['team_logo'] = request.POST.get('team_logo')
 
     context['home_badge'] = request.POST.get('home_badge')
     context['away_badge'] = request.POST.get('away_badge')
