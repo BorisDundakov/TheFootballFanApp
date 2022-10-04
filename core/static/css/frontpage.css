@@ -65,6 +65,10 @@ h2.gameweek-results {
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
 }
 
+.title{
+    background-color: darkorange;
+}
+
 
 .teams-dropdown {
     width: 100%;

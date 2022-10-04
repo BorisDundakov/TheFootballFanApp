@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from core.teams.BulgarianLeague import *
+from core.leagues.BulgarianLeague import *
 
 
 # Create your views here.
