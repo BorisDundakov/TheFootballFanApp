@@ -160,8 +160,8 @@ def export_last_3_results(team_name, team_number):
 
     end = time.time()
 
-    print("Export_last_3_results is :",
-          (end - start) * 10 ** 3, "ms")
+    # print("Export_last_3_results is :",
+    #       (end - start) * 10 ** 3, "ms")
 
     return results
 
@@ -240,8 +240,8 @@ def export_team_location(team_name):
 
     end = time.time()
 
-    print("Export_location is :",
-          (end - start) * 10 ** 3, "ms")
+    # print("Export_location is :",
+    #       (end - start) * 10 ** 3, "ms")
 
     return location_info
 
@@ -276,8 +276,8 @@ def get_stadium_coordinates(driver):
             pass
     end = time.time()
 
-    print("get_stadium_coordinates is :",
-          (end - start_time) * 10 ** 3, "ms")
+    # print("get_stadium_coordinates is :",
+    #       (end - start_time) * 10 ** 3, "ms")
 
     return stadium_coordinates
 
@@ -336,7 +336,7 @@ def distance_to_stadium(bing_address):
 
     end = time.time()
 
-    print("Distance_to_stadium is :",
-          (end - start_time) * 10 ** 3, "ms")
+    # print("Distance_to_stadium is :",
+    #       (end - start_time) * 10 ** 3, "ms")
 
     return travel_time

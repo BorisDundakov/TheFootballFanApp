@@ -96,8 +96,8 @@ def travel_next_game(request):
     # TODO - integrate google maps instead of bing maps, bus alternatives,
     #  fuel expenditure (go by car alternative price comparison)
     # TODO 1): locate the nearest train stops on БДЖ to the starting and end locations
-    # TODO 5): find a trip between the БДЖ stops
-    # TODO 6): display a list of the possible trips as buttons --> starting date & time, end date & time, price
-    # TODO 7): clicking the button would redirect you to the БДЖ website for buying the tickets
+    # TODO 2): find a trip between the БДЖ stops
+    # TODO 3): display a list of the possible trips as buttons --> starting date & time, end date & time, price
+    # TODO 4): clicking the button would redirect you to the БДЖ website for buying the tickets
 
     return render(request, 'travelNextGame.html', context)
