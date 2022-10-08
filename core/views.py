@@ -67,6 +67,10 @@ def travel_next_game(request):
     teams = request.POST.get('teams')
 
     selected_team = request.POST.get('team_name')
+
+    context['home'] = teams.split(',')[0]
+    context['away'] = teams.split(',')[1]
+
     selected_stadium = request.POST.get('team_location')
     context['team_logo'] = request.POST.get('team_logo')
 
@@ -75,8 +79,7 @@ def travel_next_game(request):
     context['weekday'] = request.POST.get('weekday')
     context['game_time'] = request.POST.get('game_time')
 
-    context['home'] = teams.split(',')[0]
-    context['away'] = teams.split(',')[1]
+
 
     # TODO: quicker sorting algorithm (quick sort?)
 

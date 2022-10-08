@@ -3,6 +3,7 @@ import requests
 import ssl
 import geocoder
 import time
+import asyncio
 
 import selenium.common.exceptions
 from selenium import webdriver
@@ -71,14 +72,14 @@ def export_next_fixture(team_name, team_number):
     url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
-    team_names = soup.find_all('span', class_='Th')
+    team_names = soup.find_all('span', class_='yi')
     for team_name in range(len(team_names)):
         if team_name == 0:
             result['home'] = team_names[team_name].text
         else:
             result['away'] = team_names[team_name].text
 
-    last_game_info = soup.find_all('div', class_='Rh')
+    last_game_info = soup.find_all('div', class_='wi')
 
     for el in last_game_info:
         badges = el.find_all_next("img")
@@ -91,7 +92,7 @@ def export_next_fixture(team_name, team_number):
     driver = webdriver.Chrome(PATH, options=op)
     driver.get(url)
 
-    match_info = driver.find_element_by_class_name("Yh").text
+    match_info = driver.find_element_by_class_name("Di").text
     game_details = list(match_info.split("\n"))
 
     game_time = game_details[0]
@@ -111,12 +112,12 @@ def export_last_game_badges(team_name, team_number):
     soup = BeautifulSoup(page.content, 'html.parser')
 
     badges = {}
-    last_game_badges = soup.find('div', class_='Rh')
+    last_game_badges = soup.find('div', class_='ok')
 
     for el in last_game_badges:
         x = el.find_all_next("img")
-        badges["home"] = x[8]['src']
-        badges["away"] = x[11]['src']
+        badges["home"] = x[2]['src']
+        badges["away"] = x[5]['src']
         break
 
     return badges
@@ -133,10 +134,10 @@ def export_last_3_results(team_name, team_number):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    scraped_home_team_names = soup.find_all('div', class_='Rj', id="undefined__home-team-name")
-    scraped_away_team_names = soup.find_all('div', class_='Rj', id="undefined__away-team-name")
-    scraped_home_team_goals = soup.find_all('div', class_='Wj')
-    scraped_away_team_goals = soup.find_all('div', class_='Xj')
+    scraped_home_team_names = soup.find_all('div', class_='dk', id="undefined__home-team-name")
+    scraped_away_team_names = soup.find_all('div', class_='dk', id="undefined__away-team-name")
+    scraped_home_team_goals = soup.find_all('div', class_='ik')
+    scraped_away_team_goals = soup.find_all('div', class_='jk')
 
     home_team_names = []
     for home_team in scraped_home_team_names:
@@ -190,6 +191,8 @@ def export_team_location(team_name):
 
     teams = export_team_names()
 
+    # TODO: this is deffinitely unncessary!!
+
     for el in scraped_team_info:
         scraped_team_url = el.contents[0].attrs['href']
         scraped_team_name = el.contents[0].attrs['title']
@@ -215,15 +218,25 @@ def export_team_location(team_name):
             continue
         break
 
+    # todo: UP TO HERE!
+
     page = requests.get(desired_url, headers=AGENT)
     soup = BeautifulSoup(page.content, 'html.parser')
     team = soup.find_all('dd')
 
     if team[0].text.isdigit():
         unedited_location = team[1].text
+        unedited_location = unedited_location.strip()
+        unedited_location = unedited_location.replace("\n          ", "0")
+        count_new_lines = unedited_location.count("0")
+
+        for i in range(count_new_lines - 1):
+            unedited_location = unedited_location.replace("0", "", 1)
+        if count_new_lines:
+            unedited_location = unedited_location.replace("0", ", ")
+
         unedited_location = unedited_location.replace("\n ", "")
         unedited_location = unedited_location.replace("  ", "")
-        unedited_location = unedited_location.strip()
 
         if unedited_location == 'Sofia' or unedited_location == 'Pazardzhik':
             if team_name == 'CSKA 1948':
@@ -233,6 +246,7 @@ def export_team_location(team_name):
 
     else:
         unedited_location = team[0].text
+        unedited_location = unedited_location.strip()
         unedited_location = unedited_location.replace("\n ", "")
         unedited_location = unedited_location.replace("  ", "")
 
@@ -295,8 +309,6 @@ def chromedriver_setup(url):
 
 def distance_to_stadium(bing_address):
     start_time = time.time()
-
-    # TODO: Try it with ProcessPoolExecutor (would it be quicker?)
 
     with ThreadPoolExecutor(max_workers=10) as executor:
         driver = executor.submit(chromedriver_setup, bing_address).result()
