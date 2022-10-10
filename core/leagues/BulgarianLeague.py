@@ -191,8 +191,6 @@ def export_team_location(team_name):
 
     teams = export_team_names()
 
-    # TODO: this is deffinitely unncessary!!
-
     for el in scraped_team_info:
         scraped_team_url = el.contents[0].attrs['href']
         scraped_team_name = el.contents[0].attrs['title']
@@ -217,8 +215,6 @@ def export_team_location(team_name):
         else:
             continue
         break
-
-    # todo: UP TO HERE!
 
     page = requests.get(desired_url, headers=AGENT)
     soup = BeautifulSoup(page.content, 'html.parser')

@@ -68,6 +68,8 @@ def travel_next_game(request):
 
     selected_team = request.POST.get('team_name')
 
+    context['team_name'] = selected_team
+
     context['home'] = teams.split(',')[0]
     context['away'] = teams.split(',')[1]
 
@@ -78,9 +80,6 @@ def travel_next_game(request):
     context['away_badge'] = request.POST.get('away_badge')
     context['weekday'] = request.POST.get('weekday')
     context['game_time'] = request.POST.get('game_time')
-
-
-
     # TODO: quicker sorting algorithm (quick sort?)
 
     if context['home'] == selected_team:
