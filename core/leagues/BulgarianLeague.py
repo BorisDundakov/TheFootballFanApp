@@ -273,6 +273,33 @@ def get_my_location():
     return current_loc
 
 
+def locate_nearest_trainstation(current_loc):
+    pass
+
+
+def locate_departure_trainstation(bing_address):
+    driver = chromedriver_setup(bing_address)
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    near_btn = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".nearbyBtn .ibs_btn"))).click()
+
+    search_bar = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#maps_sb")))
+
+    ActionChains(driver).move_to_element(search_bar)
+    search_bar.send_keys('train station')
+    search_icon = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
+    time.sleep(5)
+    # .nameContainer
+    try:
+        station = driver.find_element_by_class_name('eh_text_outer')
+    except selenium.common.exceptions.NoSuchElementException:
+        station = driver.find_element_by_css_selector('li:nth-child(1) .b_vPanel div:nth-child(1) .b_factrow')
+
+    departure_station = station.text
+    driver.quit()
+    return departure_station
+
+
 def get_stadium_coordinates(driver):
     start_time = time.time()
     stadium_coordinates = None
