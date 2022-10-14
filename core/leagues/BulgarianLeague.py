@@ -274,7 +274,32 @@ def get_my_location():
 
 
 def locate_nearest_trainstation(current_loc):
-    pass
+    x = current_loc[0]
+    y = current_loc[1]
+
+    bing_constant = 'https://www.bing.com/maps?q=+'
+    # https://www.bing.com/maps?q=+42.69775,+23.3241
+    bing_address = bing_constant + f'{x},+'f'{y}'
+    driver = chromedriver_setup(bing_address)
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
+    near_btn = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".nearbyBtn .ibs_btn"))).click()
+
+    search_bar = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#maps_sb")))
+
+    ActionChains(driver).move_to_element(search_bar)
+    search_bar.send_keys('train station')
+    search_icon = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
+    time.sleep(5)
+    # .nameContainer
+    try:
+        station = driver.find_element_by_class_name('eh_text_outer')
+    except selenium.common.exceptions.NoSuchElementException:
+        station = driver.find_element_by_css_selector('li:nth-child(1) .b_vPanel div:nth-child(1) .b_factrow')
+
+    nearest_station = station.text
+    driver.quit()
+    return nearest_station
 
 
 def locate_departure_trainstation(bing_address):
