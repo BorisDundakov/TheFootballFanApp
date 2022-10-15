@@ -3,11 +3,13 @@ import requests
 import ssl
 import geocoder
 import time
+from time import strptime
 import asyncio
 
 import selenium.common.exceptions
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -64,6 +66,8 @@ def export_matchday_results():
 
             [{home_teams[el].text: home_goals[el].text}, {away_teams[el].text: away_goals[el].text}])
 
+    driver.quit()
+
 
 def export_next_fixture(team_name, team_number):
     team = team_name.lower()
@@ -79,12 +83,12 @@ def export_next_fixture(team_name, team_number):
         else:
             result['away'] = team_names[team_name].text
 
-    last_game_info = soup.find_all('div', class_='Uj')
+    last_game_info = soup.find_all('div', class_='Oi')
 
     for el in last_game_info:
         badges = el.find_all_next("img")
-        result["home_badge"] = badges[2]['src']
-        result["away_badge"] = badges[5]['src']
+        result["away_badge"] = badges[2]['src']
+        result["home_badge"] = badges[5]['src']
 
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
@@ -100,7 +104,7 @@ def export_next_fixture(team_name, team_number):
 
     result['weekday'] = game_date
     result['game_time'] = game_time
-
+    driver.quit()
     return result
 
 
@@ -325,6 +329,115 @@ def locate_departure_trainstation(bing_address):
     return departure_station
 
 
+def generate_railways_website_link(starting_station, departure_station, weekday, game_time):
+    pass
+    bulgarian_railways_website = 'https://www.bdz.bg/bg'
+    # #from, #to
+    # 'Централна Железопътна гара - Пловдив'; 'Central Railway Station Sofia - София'
+    railway_cities_BG = ['София', 'Варна', 'Бургас', 'Пловдив', 'Русе', 'Горна оряховица', 'Стара загова', 'Плевен',
+                         'Айтос', 'Асеновград', 'Батановци', 'Белово', 'Белозем', 'Белослав', 'Благоеврад',
+                         'Бойчиновци',
+                         'Брусарци', 'Бяла', 'Велико Търново', 'Велинград', 'Видин', 'Враца', 'Габрово', 'Даскалово',
+                         'Две могили', 'Димитровград', 'Добрич', 'Дряново', 'Дупница', 'Дългопол', 'Елин Пелин',
+                         'Земен',
+                         'Златица', 'Зверино', 'Ихтиман', 'Казанлък', 'Карлово', 'Карнобат', 'Каспичан', 'Криводол',
+                         'Крумово', 'Кюстендил', 'Кърджали', 'Лакатник', 'Левски', 'Лом', 'Ловеч', 'Мездра', 'Метал',
+                         'Монтана', 'Нова Загора', 'Пазарджик', 'Павликени', 'Перник', 'Перник Разпред.', 'Пертич',
+                         'Пирдоп', 'Попово', 'Попски тръмбеш', 'Провадия', 'Първомай', 'Радомир', 'Роман', 'Разград',
+                         'Самуил', 'Сандански', 'Свиленград', 'Свищов', 'Своге', 'Септември', 'Силистра', 'Сливен',
+                         'Сливница', 'Стамболийски', 'Стралджа', 'Стражица', 'Твърдица', 'Трявна', 'Тулово',
+                         'Търговище',
+                         'Филипово', 'Хисар', 'Церово', 'Червен бряг', 'Чирпан', 'Шумен', 'Ямбол']
+
+    railway_cities_EN = ['Sofia', 'Varna', 'Burgas', 'Plovdiv', 'Ruse', 'Gorna Oryakhovitsa', 'Stara Zagora', 'Pleven',
+                         'Aytos', 'Asenovgrad', 'Batanovtsi', 'Belovo', 'Belozem', 'Beloslav', 'Blagoevgrad',
+                         'Boychinovtsi',
+                         'Brusartsi', 'Bqla', 'Veliko Tarnovo', 'Velingrad', 'Vidin', 'Vratsa', 'Gabrovo', 'Daskalovo',
+                         'Dve mogili', 'Dimitrovgrad', 'Dobrich', 'Drqnovo', 'Dupnitsa', 'Dulgopol', 'Elin Pelin',
+                         'Zemen',
+                         'Zlatitsa', 'Zverino', 'Ihtiman', 'Kazanlak', 'Karlovo', 'Karnobat', 'Kaspichan', 'Krivodol',
+                         'Krumovo', 'Kyustendil', 'Kardzhali', 'Lakatnik', 'Levski', 'Lom', 'Lovech', 'Mezdra', 'Metal',
+                         'Montana', 'Nova Zagora', 'Pazardzhik', 'Pavlikeni', 'Pernik', 'Pernik razpred.', 'Petrich',
+                         'Pirdop', 'Popovo', 'Polski Trambesh', 'Provadia', 'Parvomay', 'Radomir', 'Roman', 'Razgrad',
+                         'Samuil', 'Sandandski', 'Svilengrad', 'Svishtov', 'Svoge', 'Septemvri', 'Silistra', 'Sliven',
+                         'Slivnitsa', 'Stamboliyski', 'Straldzha', 'Strazhitsa', 'Tvarditsa', 'Tryavna', 'Tulovo',
+                         'Targovishte',
+                         'Filipovo', 'Hisar', 'Tserovo', 'Cherven bryag', 'Chirpan', 'Shumen', 'Yambol']
+
+    driver = chromedriver_setup(bulgarian_railways_website)
+
+    # python find the index of a list which contains a value
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    month_index = [index + 1 for index, el in enumerate(months) if el in weekday]
+    month_index = ''.join(str(i) for i in month_index)
+    l_day = [el for el in weekday if el.isdigit()]
+    day = ''.join(str(d) for d in l_day)
+
+    full_date = f'{day}.{month_index}.{2022}'
+
+    BG_start_station = [el for el in railway_cities_BG if el in starting_station]
+    BG_departure_station = [el for el in railway_cities_BG if el in departure_station]
+    if len(BG_start_station) < 1:
+        start_index = [index for index, el in enumerate(railway_cities_EN) if el in starting_station]
+        starting_station = railway_cities_BG[start_index[0]]
+    else:
+        starting_station = BG_start_station
+    if len(BG_departure_station) < 1:
+        end_index = [index for index, el in enumerate(railway_cities_EN) if el in departure_station]
+        departure_station = railway_cities_BG[end_index[0]]
+    else:
+        departure_station = BG_departure_station
+    # .cw-close
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".cw-close"))).click()
+    start = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#from")))
+    end = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#to")))
+    ActionChains(driver).move_to_element(start)
+    start.clear()
+    start.send_keys(starting_station)
+    ActionChains(driver).move_to_element(end)
+    end.send_keys(departure_station)
+
+    send_button = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".search-submit")))
+
+    # TODO: Implement logic to set correct date & time corresponding to the game that makes sense
+
+    # #destination-date; #type; #hour;
+    travel_date = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#destination-date")))
+    # travel_type = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#type")))
+    arriving_after = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#hour")))
+    x = ActionChains(driver).move_to_element(travel_date).click()
+    travel_date.send_keys(Keys.CONTROL, 'a')
+    travel_date.send_keys(full_date)
+
+    ActionChains(driver).move_to_element(arriving_after)
+    game_time = game_time.replace(':', '.')
+    #game_time = float(game_time) - 4
+    game_time = 0
+    arriving_after.send_keys(game_time)
+    # ActionChains(driver).move_to_element(send_button)
+    send_button.click()
+    # WebDriverWait(driver, 30).until('.btn-sm').click()
+    # # go = WebDriverWait(driver, 30).until(
+    # #     EC.element_to_be_clickable((By.CSS_SELECTOR, 'btn btn-success btn-sm'))).click()
+    # st_station = WebDriverWait(driver, 30).until(
+    #     EC.element_to_be_clickable((By.CSS_SELECTOR, '#id-search-trips-station-from .css-1hwfws3'))).click()
+    # ed_station = WebDriverWait(driver, 30).until(
+    #     EC.element_to_be_clickable((By.CSS_SELECTOR, '#id-search-trips-station-to .css-1hwfws3'))).click()
+    # dep_date = WebDriverWait(driver, 30).until(
+    #     EC.element_to_be_clickable((By.CSS_SELECTOR, '#id-search-trips-going-date'))).click()
+    # ActionChains(driver).move_to_element(st_station)
+    # st_station.send_keys(*starting_station)
+    # ActionChains(driver).move_to_element(ed_station)
+    # ed_station.send_keys(*departure_station)
+    # ActionChains(driver).move_to_element(dep_date)
+    # dep_date.send_keys(weekday)
+    # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn--trip-select-submit'))).click()
+
+    link = driver.current_url
+    return link
+
+
 def get_stadium_coordinates(driver):
     start_time = time.time()
     stadium_coordinates = None
@@ -341,7 +454,7 @@ def get_stadium_coordinates(driver):
 
     # print("get_stadium_coordinates is :",
     #       (end - start_time) * 10 ** 3, "ms")
-
+    driver.quit()
     return stadium_coordinates
 
 
@@ -399,5 +512,5 @@ def distance_to_stadium(bing_address):
 
     # print("Distance_to_stadium is :",
     #       (end - start_time) * 10 ** 3, "ms")
-
+    # driver.quit()
     return travel_time

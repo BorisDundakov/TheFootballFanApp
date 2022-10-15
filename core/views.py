@@ -94,6 +94,16 @@ def travel_next_game(request):
     distance = distance_to_stadium(bing_maps_link)
     context['distance'] = distance
 
+    current_loc = get_my_location()
+
+    starting_trainstation = locate_nearest_trainstation(current_loc)
+    departure_trainstaion = locate_departure_trainstation(bing_maps_link)
+    weekday = context['weekday']
+    game_time = context['game_time']
+
+    context['buy_train_tickets'] = generate_railways_website_link(starting_trainstation, departure_trainstaion, weekday,
+                                                                  game_time)
+
     # TODO FUTURE:
     # TODO - integrate google maps instead of bing maps, bus alternatives,
     #  fuel expenditure (go by car alternative price comparison)
