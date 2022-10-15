@@ -83,12 +83,12 @@ def export_next_fixture(team_name, team_number):
         else:
             result['away'] = team_names[team_name].text
 
-    last_game_info = soup.find_all('div', class_='Oi')
-
-    for el in last_game_info:
-        badges = el.find_all_next("img")
-        result["away_badge"] = badges[2]['src']
-        result["home_badge"] = badges[5]['src']
+    last_game_info = soup.find_all(class_='badgeContainer')
+    result["home_badge"] = last_game_info[1]['src']
+    result["away_badge"] = last_game_info[3]['src']
+    # for el in last_game_info:
+    #     result["home_badge"] = el[1]['src']
+    #     result["away_badge"] = el[3]['src']
 
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
