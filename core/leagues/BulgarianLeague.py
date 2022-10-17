@@ -15,7 +15,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from concurrent.futures import ThreadPoolExecutor
 
 from core.constants.WebAdresses import URL_LIVESCORE_BG_LEAGUE, URL_SOCCERWAY_BG_LEAGUE, URL_FLASHSCORE_BG_LEAGUE, \
-    URL_BING_MAPS_CONST, URL_SOCCERWAY, URL_LIVESCORE_FC_CONST
+    URL_BING_MAPS_CONST, URL_SOCCERWAY, URL_LIVESCORE_FC_CONST, URL_BULGARIAN_RAILWAYS
+
+from core.constants.RailwayCities import railway_cities_EN, railway_cities_BG
 
 
 def export_team_names():
@@ -34,12 +36,7 @@ def export_team_names():
 
 
 def export_matchday_results():
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
-    driver = webdriver.Chrome(PATH, options=op)
-    driver.get(URL_FLASHSCORE_BG_LEAGUE)
+    driver = chromedriver_setup(URL_FLASHSCORE_BG_LEAGUE)
 
     # ACCEPTING COOKIES
     WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))).click()
@@ -85,11 +82,7 @@ def export_next_fixture(team_name, team_number):
     #     result["home_badge"] = el[1]['src']
     #     result["away_badge"] = el[3]['src']
 
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    driver = webdriver.Chrome(PATH, options=op)
-    driver.get(url)
+    driver = chromedriver_setup(url)
 
     match_info = driver.find_element_by_class_name("Ui").text
     game_details = list(match_info.split("\n"))
@@ -169,7 +162,7 @@ def export_last_3_results(team_name, team_number):
 def export_team_location(team_name):
     # TODO: Reduce function complexity (count of for loops)
 
-    start = time.time()
+    #start = time.time()
 
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
@@ -244,7 +237,7 @@ def export_team_location(team_name):
 
     location_info = unedited_location
 
-    end = time.time()
+    #end = time.time()
 
     # print("Export_location is :",
     #       (end - start) * 10 ** 3, "ms")
@@ -274,16 +267,16 @@ def locate_nearest_trainstation(current_loc):
     bing_address = URL_BING_MAPS_CONST + f'{x},+'f'{y}'
     driver = chromedriver_setup(bing_address)
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
-    near_btn = WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, 30).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, ".nearbyBtn .ibs_btn"))).click()
 
     search_bar = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#maps_sb")))
 
     ActionChains(driver).move_to_element(search_bar)
     search_bar.send_keys('train station')
-    search_icon = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
     time.sleep(5)
-    # .nameContainer
+
     try:
         station = driver.find_element_by_class_name('eh_text_outer')
     except selenium.common.exceptions.NoSuchElementException:
@@ -297,14 +290,14 @@ def locate_nearest_trainstation(current_loc):
 def locate_departure_trainstation(bing_address):
     driver = chromedriver_setup(bing_address)
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
-    near_btn = WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, 30).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, ".nearbyBtn .ibs_btn"))).click()
 
     search_bar = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#maps_sb")))
 
     ActionChains(driver).move_to_element(search_bar)
     search_bar.send_keys('train station')
-    search_icon = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
     time.sleep(5)
     # .nameContainer
     try:
@@ -318,40 +311,7 @@ def locate_departure_trainstation(bing_address):
 
 
 def generate_railways_website_link(starting_station, departure_station, weekday):
-    pass
-    bulgarian_railways_website = 'https://www.bdz.bg/bg'
-    # 'Централна Железопътна гара - Пловдив'; 'Central Railway Station Sofia - София'
-    railway_cities_BG = ['София', 'Варна', 'Бургас', 'Пловдив', 'Русе', 'Горна оряховица', 'Стара загова', 'Плевен',
-                         'Айтос', 'Асеновград', 'Батановци', 'Белово', 'Белозем', 'Белослав', 'Благоеврад',
-                         'Бойчиновци',
-                         'Брусарци', 'Бяла', 'Велико Търново', 'Велинград', 'Видин', 'Враца', 'Габрово', 'Даскалово',
-                         'Две могили', 'Димитровград', 'Добрич', 'Дряново', 'Дупница', 'Дългопол', 'Елин Пелин',
-                         'Земен',
-                         'Златица', 'Зверино', 'Ихтиман', 'Казанлък', 'Карлово', 'Карнобат', 'Каспичан', 'Криводол',
-                         'Крумово', 'Кюстендил', 'Кърджали', 'Лакатник', 'Левски', 'Лом', 'Ловеч', 'Мездра', 'Метал',
-                         'Монтана', 'Нова Загора', 'Пазарджик', 'Павликени', 'Перник', 'Перник Разпред.', 'Пертич',
-                         'Пирдоп', 'Попово', 'Попски тръмбеш', 'Провадия', 'Първомай', 'Радомир', 'Роман', 'Разград',
-                         'Самуил', 'Сандански', 'Свиленград', 'Свищов', 'Своге', 'Септември', 'Силистра', 'Сливен',
-                         'Сливница', 'Стамболийски', 'Стралджа', 'Стражица', 'Твърдица', 'Трявна', 'Тулово',
-                         'Търговище',
-                         'Филипово', 'Хисар', 'Церово', 'Червен бряг', 'Чирпан', 'Шумен', 'Ямбол']
-
-    railway_cities_EN = ['Sofia', 'Varna', 'Burgas', 'Plovdiv', 'Ruse', 'Gorna Oryakhovitsa', 'Stara Zagora', 'Pleven',
-                         'Aytos', 'Asenovgrad', 'Batanovtsi', 'Belovo', 'Belozem', 'Beloslav', 'Blagoevgrad',
-                         'Boychinovtsi',
-                         'Brusartsi', 'Bqla', 'Veliko Tarnovo', 'Velingrad', 'Vidin', 'Vratsa', 'Gabrovo', 'Daskalovo',
-                         'Dve mogili', 'Dimitrovgrad', 'Dobrich', 'Drqnovo', 'Dupnitsa', 'Dulgopol', 'Elin Pelin',
-                         'Zemen',
-                         'Zlatitsa', 'Zverino', 'Ihtiman', 'Kazanlak', 'Karlovo', 'Karnobat', 'Kaspichan', 'Krivodol',
-                         'Krumovo', 'Kyustendil', 'Kardzhali', 'Lakatnik', 'Levski', 'Lom', 'Lovech', 'Mezdra', 'Metal',
-                         'Montana', 'Nova Zagora', 'Pazardzhik', 'Pavlikeni', 'Pernik', 'Pernik razpred.', 'Petrich',
-                         'Pirdop', 'Popovo', 'Polski Trambesh', 'Provadia', 'Parvomay', 'Radomir', 'Roman', 'Razgrad',
-                         'Samuil', 'Sandandski', 'Svilengrad', 'Svishtov', 'Svoge', 'Septemvri', 'Silistra', 'Sliven',
-                         'Slivnitsa', 'Stamboliyski', 'Straldzha', 'Strazhitsa', 'Tvarditsa', 'Tryavna', 'Tulovo',
-                         'Targovishte',
-                         'Filipovo', 'Hisar', 'Tserovo', 'Cherven bryag', 'Chirpan', 'Shumen', 'Yambol']
-
-    driver = chromedriver_setup(bulgarian_railways_website)
+    driver = chromedriver_setup(URL_BULGARIAN_RAILWAYS)
 
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     month_index = [index + 1 for index, el in enumerate(months) if el in weekday]
@@ -404,7 +364,7 @@ def generate_railways_website_link(starting_station, departure_station, weekday)
 
 
 def get_stadium_coordinates(driver):
-    start_time = time.time()
+    # start_time = time.time()
     stadium_coordinates = None
 
     if driver.title == 'Stadion Vasil Levski, Sredets, Bulgaria - Bing Карти':
@@ -415,7 +375,7 @@ def get_stadium_coordinates(driver):
             stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
         except selenium.common.exceptions.NoSuchElementException:
             pass
-    end = time.time()
+    # end = time.time()
 
     # print("get_stadium_coordinates is :",
     #       (end - start_time) * 10 ** 3, "ms")
@@ -435,7 +395,7 @@ def chromedriver_setup(url):
 
 
 def distance_to_stadium(bing_address):
-    start_time = time.time()
+    # start_time = time.time()
 
     with ThreadPoolExecutor(max_workers=10) as executor:
         driver = executor.submit(chromedriver_setup, bing_address).result()
@@ -473,7 +433,7 @@ def distance_to_stadium(bing_address):
     else:
         travel_time = f"{time_hours.text} h: {time_minutes.text} min"
 
-    end = time.time()
+    # end = time.time()
 
     # print("Distance_to_stadium is :",
     #       (end - start_time) * 10 ** 3, "ms")

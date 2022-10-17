@@ -4,3 +4,4 @@ URL_FLASHSCORE_BG_LEAGUE = "https://www.flashscore.com/football/bulgaria/parva-l
 URL_SOCCERWAY = "https://int.soccerway.com"
 URL_SOCCERWAY_BG_LEAGUE = "https://int.soccerway.com/national/bulgaria/a-pfg/20222023/regular-season/r70062/"
 URL_BING_MAPS_CONST = "https://www.bing.com/maps?q=+"
+URL_BULGARIAN_RAILWAYS = "https://www.bdz.bg/bg"
