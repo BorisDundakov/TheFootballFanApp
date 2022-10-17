@@ -101,8 +101,7 @@ def travel_next_game(request):
     weekday = context['weekday']
     game_time = context['game_time']
 
-    context['buy_train_tickets'] = generate_railways_website_link(starting_trainstation, departure_trainstaion, weekday,
-                                                                  game_time)
+    context['buy_train_tickets'] = generate_railways_website_link(starting_trainstation, departure_trainstaion, weekday)
 
     # TODO FUTURE:
     # TODO - integrate google maps instead of bing maps, bus alternatives,

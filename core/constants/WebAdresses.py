@@ -1,0 +1,6 @@
+URL_LIVESCORE_BG_LEAGUE = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
+URL_LIVESCORE_FC_CONST = "https://www.livescore.com/en/football/team/"
+URL_FLASHSCORE_BG_LEAGUE = "https://www.flashscore.com/football/bulgaria/parva-liga/"
+URL_SOCCERWAY = "https://int.soccerway.com"
+URL_SOCCERWAY_BG_LEAGUE = "https://int.soccerway.com/national/bulgaria/a-pfg/20222023/regular-season/r70062/"
+URL_BING_MAPS_CONST = "https://www.bing.com/maps?q=+"

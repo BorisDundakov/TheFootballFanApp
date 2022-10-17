@@ -3,8 +3,6 @@ import requests
 import ssl
 import geocoder
 import time
-from time import strptime
-import asyncio
 
 import selenium.common.exceptions
 from selenium import webdriver
@@ -14,17 +12,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 
-# TODO: Put these addresses into constants file and reference them from there
-new_url = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
-old_url = "https://www.livescore.com/en/football/bulgaria/parva-liga/table/"
+from core.constants.WebAdresses import URL_LIVESCORE_BG_LEAGUE, URL_SOCCERWAY_BG_LEAGUE, URL_FLASHSCORE_BG_LEAGUE, \
+    URL_BING_MAPS_CONST, URL_SOCCERWAY, URL_LIVESCORE_FC_CONST
 
 
 def export_team_names():
-    URL = "https://prod-public-api.livescore.com/v1/api/app/stage/soccer/bulgaria/parva-liga/3?MD=1"
     football_clubs = {}
-    response = requests.get(URL)
+    response = requests.get(URL_LIVESCORE_BG_LEAGUE)
     json_file = (response.json())
     teams = (json_file['Stages'][0]['LeagueTable']['L'][0]['Tables'][0]['team'])
 
@@ -38,13 +34,12 @@ def export_team_names():
 
 
 def export_matchday_results():
-    LEAGUE_URL = "https://www.flashscore.com/football/bulgaria/parva-liga/"
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # PATH TO THE chromedriver.exe downloaded (check requirements.txt)
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
     op.add_argument('--blink-settings=imagesEnabled=false')  # blocking images load to increase program speed
     driver = webdriver.Chrome(PATH, options=op)
-    driver.get(LEAGUE_URL)
+    driver.get(URL_FLASHSCORE_BG_LEAGUE)
 
     # ACCEPTING COOKIES
     WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))).click()
@@ -73,7 +68,7 @@ def export_next_fixture(team_name, team_number):
     team = team_name.lower()
     team = team.replace(" ", "-")
     result = {"home": 0, "away": 0, "home_badge": '', "away_badge": ''}
-    url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
+    url = URL_LIVESCORE_FC_CONST + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     team_names = soup.find_all('span', class_='Pi')
@@ -111,7 +106,7 @@ def export_next_fixture(team_name, team_number):
 def export_last_game_badges(team_name, team_number):
     team = team_name.lower()
     team = team.replace(" ", "-")
-    url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
+    url = URL_LIVESCORE_FC_CONST + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -134,7 +129,7 @@ def export_last_3_results(team_name, team_number):
     team = team.replace(" ", "-")
 
     results = []
-    url = "https://www.livescore.com/en/football/team/" + f"{team}" + f"/{team_number}/" + "overview/"
+    url = URL_LIVESCORE_FC_CONST + f"{team}" + f"/{team_number}/" + "overview/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -176,8 +171,6 @@ def export_team_location(team_name):
 
     start = time.time()
 
-    WEBSITE_URL = 'https://int.soccerway.com'
-
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
@@ -185,8 +178,7 @@ def export_team_location(team_name):
     AGENT = {
         "User-Agent": 'Mozilla/5.0'}
 
-    LEAGUE_URL = "https://int.soccerway.com/national/bulgaria/a-pfg/20222023/regular-season/r70062/"
-    page = requests.get(LEAGUE_URL, headers=AGENT)
+    page = requests.get(URL_SOCCERWAY_BG_LEAGUE, headers=AGENT)
     soup = BeautifulSoup(page.content, 'html.parser')
 
     football_clubs = []
@@ -214,7 +206,7 @@ def export_team_location(team_name):
             football_clubs[team][key] = replace_team_names[counter]
             counter += 1
             if football_clubs[team][key] == team_name:
-                desired_url = WEBSITE_URL + key
+                desired_url = URL_SOCCERWAY + key
                 break
         else:
             continue
@@ -261,11 +253,9 @@ def export_team_location(team_name):
 
 
 def load_bing_maps(location_name):
-    bing_constant = 'https://www.bing.com/maps?q=+'
-
     location_url = location_name.replace(" ", "+")
     location_url = location_url.replace(",", "%2C")
-    bing_address = bing_constant + location_url
+    bing_address = URL_BING_MAPS_CONST + location_url
 
     return bing_address
 
@@ -281,9 +271,7 @@ def locate_nearest_trainstation(current_loc):
     x = current_loc[0]
     y = current_loc[1]
 
-    bing_constant = 'https://www.bing.com/maps?q=+'
-    # https://www.bing.com/maps?q=+42.69775,+23.3241
-    bing_address = bing_constant + f'{x},+'f'{y}'
+    bing_address = URL_BING_MAPS_CONST + f'{x},+'f'{y}'
     driver = chromedriver_setup(bing_address)
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
     near_btn = WebDriverWait(driver, 30).until(
@@ -329,10 +317,9 @@ def locate_departure_trainstation(bing_address):
     return departure_station
 
 
-def generate_railways_website_link(starting_station, departure_station, weekday, game_time):
+def generate_railways_website_link(starting_station, departure_station, weekday):
     pass
     bulgarian_railways_website = 'https://www.bdz.bg/bg'
-    # #from, #to
     # 'Централна Железопътна гара - Пловдив'; 'Central Railway Station Sofia - София'
     railway_cities_BG = ['София', 'Варна', 'Бургас', 'Пловдив', 'Русе', 'Горна оряховица', 'Стара загова', 'Плевен',
                          'Айтос', 'Асеновград', 'Батановци', 'Белово', 'Белозем', 'Белослав', 'Благоеврад',
@@ -366,7 +353,6 @@ def generate_railways_website_link(starting_station, departure_station, weekday,
 
     driver = chromedriver_setup(bulgarian_railways_website)
 
-    # python find the index of a list which contains a value
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     month_index = [index + 1 for index, el in enumerate(months) if el in weekday]
     month_index = ''.join(str(i) for i in month_index)
@@ -387,7 +373,7 @@ def generate_railways_website_link(starting_station, departure_station, weekday,
         departure_station = railway_cities_BG[end_index[0]]
     else:
         departure_station = BG_departure_station
-    # .cw-close
+
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".cw-close"))).click()
     start = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#from")))
     end = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#to")))
@@ -402,37 +388,16 @@ def generate_railways_website_link(starting_station, departure_station, weekday,
 
     # TODO: Implement logic to set correct date & time corresponding to the game that makes sense
 
-    # #destination-date; #type; #hour;
     travel_date = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#destination-date")))
-    # travel_type = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#type")))
     arriving_after = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#hour")))
-    x = ActionChains(driver).move_to_element(travel_date).click()
+    ActionChains(driver).move_to_element(travel_date).click()
     travel_date.send_keys(Keys.CONTROL, 'a')
     travel_date.send_keys(full_date)
 
     ActionChains(driver).move_to_element(arriving_after)
-    game_time = game_time.replace(':', '.')
-    #game_time = float(game_time) - 4
     game_time = 0
     arriving_after.send_keys(game_time)
-    # ActionChains(driver).move_to_element(send_button)
     send_button.click()
-    # WebDriverWait(driver, 30).until('.btn-sm').click()
-    # # go = WebDriverWait(driver, 30).until(
-    # #     EC.element_to_be_clickable((By.CSS_SELECTOR, 'btn btn-success btn-sm'))).click()
-    # st_station = WebDriverWait(driver, 30).until(
-    #     EC.element_to_be_clickable((By.CSS_SELECTOR, '#id-search-trips-station-from .css-1hwfws3'))).click()
-    # ed_station = WebDriverWait(driver, 30).until(
-    #     EC.element_to_be_clickable((By.CSS_SELECTOR, '#id-search-trips-station-to .css-1hwfws3'))).click()
-    # dep_date = WebDriverWait(driver, 30).until(
-    #     EC.element_to_be_clickable((By.CSS_SELECTOR, '#id-search-trips-going-date'))).click()
-    # ActionChains(driver).move_to_element(st_station)
-    # st_station.send_keys(*starting_station)
-    # ActionChains(driver).move_to_element(ed_station)
-    # ed_station.send_keys(*departure_station)
-    # ActionChains(driver).move_to_element(dep_date)
-    # dep_date.send_keys(weekday)
-    # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn--trip-select-submit'))).click()
 
     link = driver.current_url
     return link
