@@ -78,10 +78,6 @@ def export_next_fixture(team_name, team_number):
     last_game_info = soup.find_all(class_='badgeContainer')
     result["home_badge"] = last_game_info[1]['src']
     result["away_badge"] = last_game_info[3]['src']
-    # for el in last_game_info:
-    #     result["home_badge"] = el[1]['src']
-    #     result["away_badge"] = el[3]['src']
-
     driver = chromedriver_setup(url)
 
     match_info = driver.find_element_by_class_name("Ui").text
@@ -116,7 +112,7 @@ def export_last_game_badges(team_name, team_number):
 
 
 def export_last_3_results(team_name, team_number):
-    start = time.time()
+    #start = time.time()
 
     team = team_name.lower()
     team = team.replace(" ", "-")
@@ -151,7 +147,7 @@ def export_last_3_results(team_name, team_number):
         results.append({home_team_names[each_game]: home_team_goals[each_game],
                         away_team_names[each_game]: away_team_goals[each_game]})
 
-    end = time.time()
+    #end = time.time()
 
     # print("Export_last_3_results is :",
     #       (end - start) * 10 ** 3, "ms")
@@ -265,29 +261,11 @@ def locate_nearest_trainstation(current_loc):
     y = current_loc[1]
 
     bing_address = URL_BING_MAPS_CONST + f'{x},+'f'{y}'
-    driver = chromedriver_setup(bing_address)
-    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
-    WebDriverWait(driver, 30).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, ".nearbyBtn .ibs_btn"))).click()
-
-    search_bar = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#maps_sb")))
-
-    ActionChains(driver).move_to_element(search_bar)
-    search_bar.send_keys('train station')
-    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
-    time.sleep(5)
-
-    try:
-        station = driver.find_element_by_class_name('eh_text_outer')
-    except selenium.common.exceptions.NoSuchElementException:
-        station = driver.find_element_by_css_selector('li:nth-child(1) .b_vPanel div:nth-child(1) .b_factrow')
-
-    nearest_station = station.text
-    driver.quit()
+    nearest_station = locate_trainstation(bing_address)
     return nearest_station
 
 
-def locate_departure_trainstation(bing_address):
+def locate_trainstation(bing_address):
     driver = chromedriver_setup(bing_address)
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
     WebDriverWait(driver, 30).until(
@@ -305,9 +283,9 @@ def locate_departure_trainstation(bing_address):
     except selenium.common.exceptions.NoSuchElementException:
         station = driver.find_element_by_css_selector('li:nth-child(1) .b_vPanel div:nth-child(1) .b_factrow')
 
-    departure_station = station.text
+    trainstation = station.text
     driver.quit()
-    return departure_station
+    return trainstation
 
 
 def generate_railways_website_link(starting_station, departure_station, weekday):

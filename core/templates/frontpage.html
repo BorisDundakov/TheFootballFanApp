@@ -63,7 +63,7 @@
     <form action="{% url 'team' %}" method="post" id="submitTeamFRM">
         {% csrf_token %}
         <input list="teamsDropDown" placeholder="enter team name here" name="team_name"
-               autocomplete="off" form="submitTeamFRM">
+               autocomplete="off" form="submitTeamFRM" >
 
         <datalist id="teamsDropDown" class="dropdown-content">
 
@@ -85,8 +85,10 @@
             <option value="Cherno More Varna">
 
         </datalist>
+        <script>
 
-        <button type="submit" id="teamBTN" class="dropbtn">Search</button>
+        </script>
+        <button type="submit" id="teamBTN" class="dropbtn" disabled="disabled">Search</button>
     </form>
 </div>
 

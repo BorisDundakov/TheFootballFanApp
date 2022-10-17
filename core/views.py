@@ -97,7 +97,7 @@ def travel_next_game(request):
     current_loc = get_my_location()
 
     starting_trainstation = locate_nearest_trainstation(current_loc)
-    departure_trainstaion = locate_departure_trainstation(bing_maps_link)
+    departure_trainstaion = locate_trainstation(bing_maps_link)
     weekday = context['weekday']
     game_time = context['game_time']
 
@@ -106,8 +106,6 @@ def travel_next_game(request):
     # TODO FUTURE:
     # TODO - integrate google maps instead of bing maps, bus alternatives,
     #  fuel expenditure (go by car alternative price comparison)
-    # TODO 1): locate the nearest train stops on БДЖ to the starting and end locations
-    # TODO 2): find a trip between the БДЖ stops
     # TODO 3): display a list of the possible trips as buttons --> starting date & time, end date & time, price
     # TODO 4): clicking the button would redirect you to the БДЖ website for buying the tickets
 
