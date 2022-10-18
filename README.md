@@ -8,7 +8,7 @@ The current version of the project allows the user to check in with the latest r
 
 ![HomePage](https://user-images.githubusercontent.com/71731579/193261077-7c1854fe-e440-48ae-ac99-20d3ff3718ec.PNG)
 ![TeamPage](https://user-images.githubusercontent.com/71731579/193261098-cbaedcfd-e309-4e82-9b9d-9bb932d6b377.PNG)
-![TravelPage](https://user-images.githubusercontent.com/71731579/193261103-c5a2a9f6-7c1a-420b-be36-5cf890a8d214.PNG)
+![TravelPage](https://user-images.githubusercontent.com/71731579/196380017-2fb01093-76e2-4ab6-8a64-9d442a64a3b4.PNG)
 
 
 ## How the project is build
