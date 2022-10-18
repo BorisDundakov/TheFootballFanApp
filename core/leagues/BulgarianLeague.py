@@ -312,6 +312,9 @@ def generate_railways_website_link(starting_station, departure_station, weekday)
     else:
         departure_station = BG_departure_station
 
+    if starting_station == departure_station:
+        return ''
+
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".cw-close"))).click()
     start = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#from")))
     end = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#to")))
