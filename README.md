@@ -4,7 +4,7 @@ A passion project dedicated towards the Bulgarian Football Fan providing all nec
 
 
 ## Current version runthrough
-The current version of the project allows the user to check in with the latest results and gather information about the next fixture of his favorite team, including travel location and estimated travel time by car, which is adjusted according to expected traffic. Future versions of the project will compare prices with different alternatives (traveling by train using data from the БДЖ website), aiming to give the user the full picture of how you can best get to the next game. Currently the website interface is very plane and basic, but future updates will give it more of a modern look.
+The current version of the project allows the user to check in with the latest results and gather information about the next fixture of his favorite team, including travel location and estimated travel time by car, which is adjusted according to expected traffic. A link to the Bulgarian Railways website is generated according to the time of the match, the location of the user and the location of the nearest train station to the stadium. Future versions of the project will compare prices with different alternatives, aiming to give the user the full picture of how you can best get to the next game. Currently the website interface is very plane and basic, but future updates will give it more of a modern look.
 
 ![HomePage](https://user-images.githubusercontent.com/71731579/193261077-7c1854fe-e440-48ae-ac99-20d3ff3718ec.PNG)
 ![TeamPage](https://user-images.githubusercontent.com/71731579/193261098-cbaedcfd-e309-4e82-9b9d-9bb932d6b377.PNG)
