@@ -8,7 +8,8 @@ The current version of the project allows the user to check in with the latest r
 
 ![HomePage](https://user-images.githubusercontent.com/71731579/193261077-7c1854fe-e440-48ae-ac99-20d3ff3718ec.PNG)
 ![TeamPage](https://user-images.githubusercontent.com/71731579/193261098-cbaedcfd-e309-4e82-9b9d-9bb932d6b377.PNG)
-![TravelPage](https://user-images.githubusercontent.com/71731579/196380017-2fb01093-76e2-4ab6-8a64-9d442a64a3b4.PNG)
+![TravelPage](https://user-images.githubusercontent.com/71731579/196381688-0d9f22a7-1038-439c-861c-ab5cf10a01b1.PNG)
+
 
 
 ## How the project is build
@@ -72,5 +73,4 @@ This is the command to install a package if you choose to use pip. To install an
 - reduce page loading time
 - adding features and webpages
 - design improvements
-- implementation with the БДЖ website
 - replace bing maps with google maps
