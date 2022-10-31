@@ -107,13 +107,10 @@ def export_last_game_badges(team_name, team_number):
         badges["home"] = x[2]['src']
         badges["away"] = x[5]['src']
         break
-
     return badges
 
 
 def export_last_3_results(team_name, team_number):
-    #start = time.time()
-
     team = team_name.lower()
     team = team.replace(" ", "-")
 
@@ -147,18 +144,11 @@ def export_last_3_results(team_name, team_number):
         results.append({home_team_names[each_game]: home_team_goals[each_game],
                         away_team_names[each_game]: away_team_goals[each_game]})
 
-    #end = time.time()
-
-    # print("Export_last_3_results is :",
-    #       (end - start) * 10 ** 3, "ms")
-
     return results
 
 
 def export_team_location(team_name):
     # TODO: Reduce function complexity (count of for loops)
-
-    #start = time.time()
 
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
@@ -175,7 +165,6 @@ def export_team_location(team_name):
     scraped_team_info = soup.find_all('td', class_='text team large-link')
 
     teams = export_team_names()
-
     for el in scraped_team_info:
         scraped_team_url = el.contents[0].attrs['href']
         scraped_team_name = el.contents[0].attrs['title']
@@ -233,11 +222,6 @@ def export_team_location(team_name):
 
     location_info = unedited_location
 
-    #end = time.time()
-
-    # print("Export_location is :",
-    #       (end - start) * 10 ** 3, "ms")
-
     return location_info
 
 
@@ -249,7 +233,6 @@ def load_bing_maps(location_name):
     return bing_address
 
 
-# noinspection DuplicatedCode
 def get_my_location():
     myloc = geocoder.ip('me')
     current_loc = myloc.latlng
@@ -277,7 +260,6 @@ def locate_trainstation(bing_address):
     search_bar.send_keys('train station')
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".searchIcon"))).click()
     time.sleep(5)
-    # .nameContainer
     try:
         station = driver.find_element_by_class_name('eh_text_outer')
     except selenium.common.exceptions.NoSuchElementException:
@@ -345,7 +327,6 @@ def generate_railways_website_link(starting_station, departure_station, weekday)
 
 
 def get_stadium_coordinates(driver):
-    # start_time = time.time()
     stadium_coordinates = None
 
     if driver.title == 'Stadion Vasil Levski, Sredets, Bulgaria - Bing Карти':
@@ -356,10 +337,7 @@ def get_stadium_coordinates(driver):
             stadium_coordinates = driver.find_element_by_class_name('geochainModuleLatLong').text
         except selenium.common.exceptions.NoSuchElementException:
             pass
-    # end = time.time()
 
-    # print("get_stadium_coordinates is :",
-    #       (end - start_time) * 10 ** 3, "ms")
     driver.quit()
     return stadium_coordinates
 
@@ -376,8 +354,6 @@ def chromedriver_setup(url):
 
 
 def distance_to_stadium(bing_address):
-    # start_time = time.time()
-
     with ThreadPoolExecutor(max_workers=10) as executor:
         driver = executor.submit(chromedriver_setup, bing_address).result()
         current_loc = executor.submit(get_my_location)
@@ -385,7 +361,7 @@ def distance_to_stadium(bing_address):
     # Using Selenium
     # ACCEPTING COOKIES
     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#bnp_btn_accept"))).click()
-    # 3 seconds --> 3000 miliseconds
+    # 3 seconds --> 3000 milliseconds
 
     button = driver.find_element_by_css_selector(".directionsIcon")
     driver.execute_script("arguments[0].click();", button)
@@ -414,9 +390,4 @@ def distance_to_stadium(bing_address):
     else:
         travel_time = f"{time_hours.text} h: {time_minutes.text} min"
 
-    # end = time.time()
-
-    # print("Distance_to_stadium is :",
-    #       (end - start_time) * 10 ** 3, "ms")
-    # driver.quit()
     return travel_time
