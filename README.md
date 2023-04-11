@@ -31,15 +31,22 @@ The following project was set up on a conda venv, due to some unexpected issues 
 2) Run through the anaconda installer
 3) Open the terminal and type in the following command to create a new virtual environment
 
-![conda_crt_venv](https://user-images.githubusercontent.com/71731579/193265365-f2fee44c-1aad-47ca-9ad9-20d289b4047f.PNG)
+```
+conda create footballfan_app
+```
+
 
 You may need to pass in at least 1 starting package in your newly created venv.
 
-![conda_crt_venv_2](https://user-images.githubusercontent.com/71731579/193265398-49a82519-2b5b-4d0f-9d00-bb769f304d37.PNG)
+```
+conda create footballfan_app python
+```
 
 4) Activate your new environment with the following command
 
-![conda_act_env](https://user-images.githubusercontent.com/71731579/193265477-1d38116b-a332-4a9a-9936-a6b9629a11b6.PNG)
+```
+conda activate footballfan_app
+```
 
 
 ### Installing packages
@@ -47,17 +54,25 @@ A list of the required libraries for installation can be found in the Requiremen
 This list is expected to grow with upcoming updates.
 Here, an example installation with one of the packages is shown:
 
-![conda_pck_instl_ex](https://user-images.githubusercontent.com/71731579/193265590-2c27a5fb-58d3-447c-9ee9-7cda1eb73cea.PNG)
+```
+conda install -c anaconda selenium
+```
+
 
 To install any package in an already existing conda venv, simply replace the last word (in this case 'selenium') with the package that you need to install.
 
 To check if a package already exists in your virtual environment, type the following command:
 
-![conda_lst_pckg](https://user-images.githubusercontent.com/71731579/193265629-ef2f3a04-ab57-4d28-b441-ea82c5fa9c41.PNG)
+```
+conda list geocoder
+```
+
 
 This is the command to install a package if you choose to use pip. To install any package in an already existing conda venv, simply replace the last word (in this case 'geocoder') with the package that you need to install.
 
-![pip_instl_pckg](https://user-images.githubusercontent.com/71731579/193265670-b2a6cf2f-ac5d-4bbe-aaba-6c3bd409e1e4.PNG)
+```
+pip install geocoder
+```
 
 
 ## Chromedriver setup 
