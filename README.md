@@ -79,7 +79,7 @@ pip install geocoder
 1) Open Google Chrome WebBrowser
 2) Navigate yourself to the About Chrome page and check in your current version
 3) Download the correct version of ChromeDriver from the link provided (https://sites.google.com/a/chromium.org/chromedriver/downloads)
-4) Extract and copy the file to 'C:\Program Files (x86)\' and paste the chrome file there
+4) Extract and copy the file to ```C:\Program Files (x86)``` and paste the chrome file there
 
 
 ## Future plans
